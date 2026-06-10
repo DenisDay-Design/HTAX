@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hinnig Tax & Assets</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --gold:#B8922A;
+  --gold-light:#C9A84C;
+  --gold-bg:#FBF7EF;
+  --black:#111111;
+  --gray:#555555;
+  --gray-light:#888888;
+  --white:#FFFFFF;
+  --off-white:#F8F6F2;
+  --border:#E8E2D6;
+}
+body{background:var(--white);color:var(--black);font-family:'Montserrat',sans-serif;font-weight:300;overflow-x:hidden;}
+
+/* NAV */
+nav{background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:1.4rem 5rem;position:sticky;top:0;z-index:100;}
+.nav-logo{display:flex;align-items:center;gap:0.8rem;}
+.nav-logo-circle{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--gold);}
+.nav-brand{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;letter-spacing:3px;color:var(--black);}
+.nav-brand span{color:var(--gold);}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-links a{text-decoration:none;color:var(--gray);font-size:11px;letter-spacing:2px;text-transform:uppercase;transition:color 0.3s;}
+.nav-links a:hover{color:var(--gold);}
+.nav-cta{background:var(--black);border:none;color:var(--white);padding:0.65rem 1.6rem;font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:500;cursor:pointer;transition:all 0.3s;}
+.nav-cta:hover{background:var(--gold);}
+
+/* HERO */
+.hero{background:var(--off-white);padding:7rem 5rem;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;border-bottom:1px solid var(--border);}
+.hero-tag{display:inline-flex;align-items:center;gap:0.6rem;margin-bottom:1.5rem;}
+.hero-tag-line{width:28px;height:1px;background:var(--gold);}
+.hero-tag span{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:500;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:60px;font-weight:300;line-height:1.1;margin-bottom:1.5rem;color:var(--black);}
+.hero h1 em{font-style:italic;color:var(--gold);}
+.hero-desc{font-size:15px;line-height:1.9;color:var(--gray);max-width:440px;margin-bottom:2.5rem;}
+.hero-btns{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;}
+.btn-black{background:var(--black);color:var(--white);border:none;padding:1rem 2.2rem;font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;cursor:pointer;transition:all 0.3s;}
+.btn-black:hover{background:var(--gold);}
+.btn-outline{background:transparent;color:var(--black);border:1.5px solid var(--black);padding:1rem 2.2rem;font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:500;cursor:pointer;transition:all 0.3s;}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold);}
+.hero-right{display:flex;flex-direction:column;gap:1.5rem;}
+.hero-stat-card{background:var(--white);border:1px solid var(--border);padding:2.2rem;border-left:3px solid var(--gold);}
+.hero-stat-num{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;color:var(--gold);line-height:1;}
+.hero-stat-label{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--gray-light);margin-top:0.4rem;font-weight:500;}
+.hero-stats-row{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+
+/* SEÇÃO BASE */
+section{padding:5.5rem 5rem;}
+.section-tag{display:inline-flex;align-items:center;gap:0.6rem;margin-bottom:1rem;}
+.section-tag-line{width:24px;height:1px;background:var(--gold);}
+.section-tag span{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:500;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;line-height:1.15;margin-bottom:0.8rem;color:var(--black);}
+.section-title em{font-style:italic;color:var(--gold);}
+.section-sub{font-size:15px;line-height:1.9;color:var(--gray);}
+.divider{width:50px;height:1px;background:var(--gold);margin:1.5rem 0;}
+
+/* MVV */
+.mvv{background:var(--white);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.mvv-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--border);margin-top:3.5rem;}
+.mvv-card{padding:3rem 2.8rem;border-right:1px solid var(--border);transition:background 0.3s;}
+.mvv-card:last-child{border-right:none;}
+.mvv-card:hover{background:var(--gold-bg);}
+.mvv-icon{width:40px;height:40px;border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold);}
+.mvv-card h3{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;margin-bottom:1rem;color:var(--black);}
+.mvv-card p{font-size:14px;line-height:1.9;color:var(--gray);}
+
+/* SOLUÇÕES - cards maiores para melhor leitura */
+.solucoes{background:var(--off-white);}
+.solucoes-header{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:end;margin-bottom:3.5rem;}
+.solucoes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;}
+.solucao-card{background:var(--white);border:1px solid var(--border);padding:3.2rem 2.8rem;transition:all 0.3s;position:relative;overflow:hidden;}
+.solucao-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--gold);transform:scaleX(0);transition:transform 0.3s;}
+.solucao-card:hover::after{transform:scaleX(1);}
+.solucao-card:hover{border-color:var(--gold-light);}
+.solucao-num{font-size:11px;letter-spacing:3px;color:var(--gold);margin-bottom:1.4rem;font-weight:700;}
+.solucao-card h3{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;margin-bottom:1.2rem;color:var(--black);line-height:1.3;}
+.solucao-card p{font-size:14px;line-height:2;color:var(--gray);margin-bottom:2rem;}
+.solucao-link{display:inline-flex;align-items:center;gap:0.4rem;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);text-decoration:none;font-weight:600;}
+.solucao-link::after{content:' →';}
+
+/* VALORES */
+.valores{background:var(--white);}
+.valores-header{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:end;margin-bottom:3.5rem;}
+.valores-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2rem;}
+.valor-item{border:1px solid var(--border);padding:3rem;position:relative;transition:all 0.3s;}
+.valor-item:hover{border-color:var(--gold-light);background:var(--gold-bg);}
+.valor-num{font-family:'Cormorant Garamond',serif;font-size:72px;font-weight:300;color:rgba(184,146,42,0.07);position:absolute;top:0.8rem;right:1.2rem;line-height:1;}
+.valor-item h4{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;margin-bottom:0.8rem;color:var(--gold);}
+.valor-item p{font-size:14px;line-height:1.9;color:var(--gray);}
+
+/* SOBRE */
+.sobre{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border);}
+.sobre-left{background:var(--black);padding:5.5rem 5rem;display:flex;flex-direction:column;justify-content:center;}
+.sobre-logo-big{width:110px;height:110px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;margin-bottom:2rem;font-family:'Cormorant Garamond',serif;font-size:46px;color:var(--gold);}
+.sobre-left h2{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:600;color:var(--white);margin-bottom:0.3rem;}
+.sobre-sub{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:2rem;font-weight:600;}
+.sobre-left p{font-size:14px;line-height:1.9;color:rgba(255,255,255,0.65);margin-bottom:1rem;}
+.sobre-right{background:var(--off-white);padding:5.5rem 5rem;}
+.sobre-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1.8rem;margin-top:2.5rem;}
+.sobre-stat{border-left:3px solid var(--gold);padding-left:1.4rem;}
+.sobre-stat-num{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:var(--gold);}
+.sobre-stat-label{font-size:12px;letter-spacing:1px;color:var(--gray-light);margin-top:0.3rem;text-transform:uppercase;font-weight:500;}
+
+/* CTA / CONTATO — redesenhado, fundo claro */
+.cta{background:var(--gold-bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:6rem 5rem;}
+.cta-inner{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+.cta-left h2{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:var(--black);line-height:1.15;margin-bottom:1rem;}
+.cta-left h2 em{font-style:italic;color:var(--gold);}
+.cta-left p{font-size:15px;line-height:1.9;color:var(--gray);margin-bottom:2rem;}
+.cta-right{display:flex;flex-direction:column;gap:1.5rem;}
+.cta-info-item{display:flex;align-items:flex-start;gap:1rem;padding:1.5rem;background:var(--white);border:1px solid var(--border);}
+.cta-info-icon{width:40px;height:40px;border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--gold);}
+.cta-info-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:0.3rem;}
+.cta-info-val{font-size:15px;color:var(--black);font-weight:600;}
+
+/* FOOTER */
+footer{background:var(--black);padding:3rem 5rem;display:flex;align-items:center;justify-content:space-between;}
+.footer-brand{font-family:'Cormorant Garamond',serif;font-size:14px;letter-spacing:3px;color:rgba(255,255,255,0.45);}
+.footer-brand span{color:var(--gold);}
+.footer-copy{font-size:11px;letter-spacing:1px;color:rgba(255,255,255,0.25);}
+
+/* MOBILE */
+@media(max-width:768px){
+  nav{padding:1rem 1.5rem;}
+  .nav-links{display:none;}
+  .hero{padding:4rem 1.5rem;grid-template-columns:1fr;gap:3rem;}
+  .hero h1{font-size:42px;}
+  section{padding:4rem 1.5rem;}
+  .mvv-grid{grid-template-columns:1fr;}
+  .mvv-card{border-right:none;border-bottom:1px solid var(--border);}
+  .solucoes-header,.valores-header{grid-template-columns:1fr;gap:1rem;}
+  .solucoes-grid{grid-template-columns:1fr;}
+  .valores-grid{grid-template-columns:1fr;}
+  .sobre{grid-template-columns:1fr;}
+  .sobre-left,.sobre-right{padding:4rem 1.5rem;}
+  .cta{padding:4rem 1.5rem;}
+  .cta-inner{grid-template-columns:1fr;gap:2.5rem;}
+  footer{padding:2rem 1.5rem;flex-direction:column;gap:0.8rem;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-circle">H</div>
+    <div class="nav-brand">HINNIG <span>TAX & ASSETS</span></div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#">Início</a></li>
+    <li><a href="#">Soluções</a></li>
+    <li><a href="#">Sobre</a></li>
+    <li><a href="#">Agentes</a></li>
+    <li><a href="#">Parceiros</a></li>
+  </ul>
+  <button class="nav-cta">Diagnóstico gratuito</button>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <div class="hero-tag"><div class="hero-tag-line"></div><span>Consultoria Financeira & Tributária</span></div>
+    <h1>Transformando desafios em <em>oportunidades</em> reais.</h1>
+    <p class="hero-desc">Soluções financeiras e tributárias personalizadas para empresários que buscam excelência, proteção patrimonial e crescimento sustentável.</p>
+    <div class="hero-btns">
+      <button class="btn-black">Conheça nossas soluções</button>
+      <button class="btn-outline">Fale conosco</button>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-stat-card">
+      <div class="hero-stat-num">25+</div>
+      <div class="hero-stat-label">Anos de experiência no mercado</div>
+    </div>
+    <div class="hero-stats-row">
+      <div class="hero-stat-card">
+        <div class="hero-stat-num">500+</div>
+        <div class="hero-stat-label">Empresas atendidas</div>
+      </div>
+      <div class="hero-stat-card">
+        <div class="hero-stat-num">98%</div>
+        <div class="hero-stat-label">Índice de satisfação</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MVV -->
+<section class="mvv">
+  <div class="section-tag"><div class="section-tag-line"></div><span>Nossa base</span></div>
+  <h2 class="section-title">Missão, Visão e <em>Valores</em></h2>
+  <div class="mvv-grid">
+    <div class="mvv-card">
+      <div class="mvv-icon">M</div>
+      <h3>Missão</h3>
+      <p>Oferecemos consultoria financeira e empresarial personalizada, focada em agregar valor ao patrimônio dos clientes, usando nossa experiência para fornecer estratégias e alcançar resultados excepcionais.</p>
+    </div>
+    <div class="mvv-card">
+      <div class="mvv-icon">V</div>
+      <h3>Visão</h3>
+      <p>Ser referência nacional em consultoria financeira e empresarial, reconhecidos pela excelência, confiança e pelo impacto positivo no crescimento e prosperidade dos clientes em todo o país.</p>
+    </div>
+    <div class="mvv-card">
+      <div class="mvv-icon">V</div>
+      <h3>Valores</h3>
+      <p>Integridade, transparência e compromisso com resultados. Cultivamos relações de confiança duradouras, pautadas pela ética e pela orientação genuína ao sucesso dos nossos clientes.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUÇÕES -->
+<section class="solucoes">
+  <div class="solucoes-header">
+    <div>
+      <div class="section-tag"><div class="section-tag-line"></div><span>O que oferecemos</span></div>
+      <h2 class="section-title">Nossas <em>Soluções</em></h2>
+    </div>
+    <p class="section-sub">Soluções estratégicas desenvolvidas para <strong>proteger, otimizar e expandir</strong> o patrimônio da sua empresa com segurança jurídica e eficiência tributária.</p>
+  </div>
+  <div class="solucoes-grid">
+    <div class="solucao-card">
+      <div class="solucao-num">01</div>
+      <h3>Sistema S</h3>
+      <p>Uma oportunidade de <strong>alívio tributário</strong> para sua empresa. Reduza encargos de forma legal e estratégica, aproveitando os benefícios do Sistema S.</p>
+      <a class="solucao-link" href="#">Saiba mais</a>
+    </div>
+    <div class="solucao-card">
+      <div class="solucao-num">02</div>
+      <h3>Quitação PGFN — INSS</h3>
+      <p>Pague guias do INSS utilizando <strong>créditos obtidos por decisões judiciais</strong>. Solução inteligente para regularização de passivos com a Receita Federal.</p>
+      <a class="solucao-link" href="#">Saiba mais</a>
+    </div>
+    <div class="solucao-card">
+      <div class="solucao-num">03</div>
+      <h3>Financiamento Internacional</h3>
+      <p>Operação <strong>Private Hard Lender</strong> que abre portas para o mercado internacional, viabilizando projetos de grande porte com estrutura sólida.</p>
+      <a class="solucao-link" href="#">Saiba mais</a>
+    </div>
+    <div class="solucao-card">
+      <div class="solucao-num">04</div>
+      <h3>Operação PERSE</h3>
+      <p>Identifique as oportunidades da Lei com a Operação PERSE. <strong>Recupere benefícios fiscais</strong> e reduza a carga tributária de forma legalmente fundamentada.</p>
+      <a class="solucao-link" href="#">Saiba mais</a>
+    </div>
+    <div class="solucao-card">
+      <div class="solucao-num">05</div>
+      <h3>Liquidação de Passivos</h3>
+      <p>Solução diferenciada para <strong>administração de passivos</strong> e superação de crises financeiras. Reestruturação estratégica com foco em resultados reais.</p>
+      <a class="solucao-link" href="#">Saiba mais</a>
+    </div>
+  </div>
+</section>
+
+<!-- VALORES -->
+<section class="valores">
+  <div class="valores-header">
+    <div>
+      <div class="section-tag"><div class="section-tag-line"></div><span>Nossa essência</span></div>
+      <h2 class="section-title">Princípios que <em>guiam</em> cada decisão</h2>
+    </div>
+    <p class="section-sub">Mais do que uma consultoria, somos <strong>parceiros estratégicos</strong> comprometidos com o crescimento sustentável e a proteção do seu patrimônio.</p>
+  </div>
+  <div class="valores-grid">
+    <div class="valor-item">
+      <div class="valor-num">01</div>
+      <h4>Compromisso com a Excelência</h4>
+      <p>Buscamos constantemente aprimorar nossos conhecimentos e habilidades, visando oferecer <strong>soluções de alta qualidade</strong> e resultados superiores para nossos clientes.</p>
+    </div>
+    <div class="valor-item">
+      <div class="valor-num">02</div>
+      <h4>Integridade e Ética</h4>
+      <p>Pautamos nossas ações pela <strong>honestidade, transparência e respeito mútuo</strong>, cultivando relações de confiança duradouras com clientes e parceiros.</p>
+    </div>
+    <div class="valor-item">
+      <div class="valor-num">03</div>
+      <h4>Orientação ao Cliente</h4>
+      <p>Colocamos as <strong>necessidades e interesses dos nossos clientes em primeiro lugar</strong>, buscando compreender suas metas para oferecer soluções personalizadas.</p>
+    </div>
+    <div class="valor-item">
+      <div class="valor-num">04</div>
+      <h4>Inovação e Adaptabilidade</h4>
+      <p>Estamos sempre atentos às mudanças do mercado, buscando <strong>soluções inovadoras e flexíveis</strong> para atender às demandas em constante evolução dos nossos clientes.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<div class="sobre">
+  <div class="sobre-left">
+    <div class="sobre-logo-big">H</div>
+    <h2>HINNIG</h2>
+    <div class="sobre-sub">Tax & Assets · Desde 2000</div>
+    <p>Fundada em 2000, a Hinnig Tax & Assets tem uma <strong style="color:rgba(255,255,255,0.85);">trajetória sólida e repleta de conquistas</strong>. Ao longo dos anos, construímos uma extensa rede global de parceiros de negócios.</p>
+    <p>Nossa equipe é composta por <strong style="color:rgba(255,255,255,0.85);">profissionais experientes</strong> que buscam parcerias com empresários, empreendedores e visionários que acreditam no poder da inovação.</p>
+  </div>
+  <div class="sobre-right">
+    <div class="section-tag"><div class="section-tag-line"></div><span>Quem somos</span></div>
+    <h2 class="section-title">Sobre a <em>HTA</em></h2>
+    <div class="divider"></div>
+    <p class="section-sub">Somos uma consultoria especializada em <strong>soluções tributárias e financeiras de alto impacto</strong>. Nossa missão é transformar complexidade em oportunidade, protegendo e expandindo o patrimônio dos nossos clientes com integridade e excelência.</p>
+    <div class="sobre-stats">
+      <div class="sobre-stat"><div class="sobre-stat-num">25+</div><div class="sobre-stat-label">Anos no mercado</div></div>
+      <div class="sobre-stat"><div class="sobre-stat-num">500+</div><div class="sobre-stat-label">Empresas atendidas</div></div>
+      <div class="sobre-stat"><div class="sobre-stat-num">5</div><div class="sobre-stat-label">Soluções especializadas</div></div>
+      <div class="sobre-stat"><div class="sobre-stat-num">SC</div><div class="sobre-stat-label">Florianópolis</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA / CONTATO — fundo claro, redesenhado -->
+<div class="cta">
+  <div class="cta-inner">
+    <div class="cta-left">
+      <div class="section-tag"><div class="section-tag-line"></div><span>Vamos conversar</span></div>
+      <h2>Inicie uma nova etapa nos seus <em>negócios</em></h2>
+      <p>Entre em contato com nossa equipe e descubra como podemos ajudar sua empresa a crescer com <strong>segurança, estratégia e excelência</strong>.</p>
+      <button class="btn-black" style="padding:1.1rem 2.8rem;font-size:12px;">Envie seus dados</button>
+    </div>
+    <div class="cta-right">
+      <div class="cta-info-item">
+        <div class="cta-info-icon">☎</div>
+        <div>
+          <div class="cta-info-label">Telefone / WhatsApp</div>
+          <div class="cta-info-val">(48) 9.9188-5454</div>
+        </div>
+      </div>
+      <div class="cta-info-item">
+        <div class="cta-info-icon">📍</div>
+        <div>
+          <div class="cta-info-label">Localização</div>
+          <div class="cta-info-val">Florianópolis, SC</div>
+        </div>
+      </div>
+      <div class="cta-info-item">
+        <div class="cta-info-icon">@</div>
+        <div>
+          <div class="cta-info-label">Instagram</div>
+          <div class="cta-info-val">@businessrh_</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">HINNIG <span>TAX & ASSETS</span></div>
+  <div class="footer-copy">© 2025 Hinnig Tax & Assets. Todos os direitos reservados.</div>
+</footer>
+
+</body>
+</html>
