@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentes — Hinnig Tax & Assets</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --gold:#B8922A;
+  --gold-light:#C9A84C;
+  --gold-bg:#FBF7EF;
+  --black:#111111;
+  --gray:#555555;
+  --gray-light:#888888;
+  --white:#FFFFFF;
+  --off-white:#F8F6F2;
+  --border:#E8E2D6;
+}
+body{background:var(--white);color:var(--black);font-family:'Montserrat',sans-serif;font-weight:300;overflow-x:hidden;}
+
+/* NAV */
+nav{background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:1.4rem 5rem;position:sticky;top:0;z-index:100;}
+.nav-logo{display:flex;align-items:center;gap:0.8rem;text-decoration:none;}
+.nav-logo-circle{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--gold);}
+.nav-brand{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;letter-spacing:3px;color:var(--black);}
+.nav-brand span{color:var(--gold);}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-links a{text-decoration:none;color:var(--gray);font-size:11px;letter-spacing:2px;text-transform:uppercase;transition:color 0.3s;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+.nav-cta{background:var(--black);border:none;color:var(--white);padding:0.65rem 1.6rem;font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:500;cursor:pointer;transition:all 0.3s;}
+.nav-cta:hover{background:var(--gold);}
+
+/* HERO DA PÁGINA */
+.page-hero{background:var(--off-white);padding:5rem 5rem 4rem;border-bottom:1px solid var(--border);}
+.page-hero-tag{display:inline-flex;align-items:center;gap:0.6rem;margin-bottom:1rem;}
+.page-hero-tag-line{width:28px;height:1px;background:var(--gold);}
+.page-hero-tag span{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:500;}
+.page-hero h1{font-family:'Cormorant Garamond',serif;font-size:54px;font-weight:300;line-height:1.1;color:var(--black);margin-bottom:1rem;}
+.page-hero h1 em{font-style:italic;color:var(--gold);}
+.page-hero p{font-size:15px;line-height:1.9;color:var(--gray);max-width:560px;}
+
+/* FILTRO */
+.filtro{padding:2.5rem 5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
+.filtro-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gray-light);margin-right:0.5rem;}
+.filtro-btn{background:transparent;border:1px solid var(--border);color:var(--gray);padding:0.5rem 1.4rem;font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;transition:all 0.3s;}
+.filtro-btn:hover,.filtro-btn.active{background:var(--black);border-color:var(--black);color:var(--white);}
+
+/* GRID DE AGENTES */
+.agentes-section{padding:4rem 5rem 6rem;}
+.agentes-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;}
+
+/* CARD DO AGENTE */
+.agente-card{background:var(--white);border:1px solid var(--border);overflow:hidden;transition:all 0.3s;position:relative;}
+.agente-card:hover{border-color:var(--gold-light);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.08);}
+.agente-foto{width:100%;aspect-ratio:3/4;background:var(--off-white);overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;}
+.agente-foto img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform 0.4s;}
+.agente-card:hover .agente-foto img{transform:scale(1.04);}
+.agente-foto-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;gap:1rem;}
+.agente-foto-placeholder .inicial{font-family:'Cormorant Garamond',serif;font-size:64px;font-weight:300;color:var(--gold);line-height:1;}
+.agente-foto-placeholder .placeholder-texto{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray-light);}
+.agente-foto-upload{position:absolute;bottom:1rem;right:1rem;background:rgba(255,255,255,0.9);border:1px solid var(--border);width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;opacity:0;transition:opacity 0.3s;}
+.agente-card:hover .agente-foto-upload{opacity:1;}
+.agente-cargo-badge{position:absolute;top:1rem;left:1rem;background:var(--black);color:var(--white);font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:0.35rem 0.8rem;font-weight:600;}
+.agente-cargo-badge.ceo{background:var(--gold);}
+.agente-info{padding:1.8rem 1.6rem;}
+.agente-nome{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--black);margin-bottom:0.3rem;line-height:1.2;}
+.agente-cargo{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem;font-weight:500;}
+.agente-divider{width:30px;height:1px;background:var(--border);margin-bottom:1.2rem;}
+.agente-acoes{display:flex;align-items:center;gap:0.8rem;}
+.agente-whatsapp{display:inline-flex;align-items:center;gap:0.5rem;background:var(--black);color:var(--white);text-decoration:none;font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:600;padding:0.6rem 1.2rem;transition:all 0.3s;flex:1;justify-content:center;}
+.agente-whatsapp:hover{background:var(--gold);}
+.agente-whatsapp svg{width:14px;height:14px;fill:currentColor;}
+
+/* SEPARADOR CEO */
+.destaque-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold-light);margin-bottom:2rem;display:flex;align-items:center;gap:1rem;font-weight:500;}
+.destaque-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.agentes-grid-destaque{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-bottom:4rem;}
+
+/* CTA BOTTOM */
+.cta-bottom{background:var(--gold-bg);border-top:1px solid var(--border);padding:5rem;text-align:center;}
+.cta-bottom h2{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--black);margin-bottom:0.8rem;}
+.cta-bottom h2 em{font-style:italic;color:var(--gold);}
+.cta-bottom p{font-size:15px;color:var(--gray);margin-bottom:2rem;line-height:1.9;}
+.btn-black{background:var(--black);color:var(--white);border:none;padding:1rem 2.5rem;font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;cursor:pointer;transition:all 0.3s;}
+.btn-black:hover{background:var(--gold);}
+
+/* FOOTER */
+footer{background:var(--black);padding:3rem 5rem;display:flex;align-items:center;justify-content:space-between;}
+.footer-brand{font-family:'Cormorant Garamond',serif;font-size:14px;letter-spacing:3px;color:rgba(255,255,255,0.45);}
+.footer-brand span{color:var(--gold);}
+.footer-copy{font-size:11px;letter-spacing:1px;color:rgba(255,255,255,0.25);}
+
+/* MOBILE */
+@media(max-width:1024px){.agentes-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:768px){
+  nav{padding:1rem 1.5rem;}
+  .nav-links{display:none;}
+  .page-hero{padding:4rem 1.5rem 3rem;}
+  .page-hero h1{font-size:38px;}
+  .filtro{padding:1.5rem;}
+  .agentes-section{padding:3rem 1.5rem;}
+  .agentes-grid,.agentes-grid-destaque{grid-template-columns:repeat(2,1fr);gap:1.2rem;}
+  .cta-bottom{padding:4rem 1.5rem;}
+  footer{padding:2rem 1.5rem;flex-direction:column;gap:0.8rem;text-align:center;}
+}
+@media(max-width:480px){
+  .agentes-grid,.agentes-grid-destaque{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html">
+    <div class="nav-logo-circle">H</div>
+    <div class="nav-brand">HINNIG <span>TAX & ASSETS</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Início</a></li>
+    <li><a href="#">Soluções</a></li>
+    <li><a href="#">Sobre</a></li>
+    <li><a href="agentes.html" class="active">Agentes</a></li>
+    <li><a href="#">Parceiros</a></li>
+  </ul>
+  <button class="nav-cta">Diagnóstico gratuito</button>
+</nav>
+
+<!-- HERO DA PÁGINA -->
+<div class="page-hero">
+  <div class="page-hero-tag"><div class="page-hero-tag-line"></div><span>Nossa equipe</span></div>
+  <h1>Agentes <em>Acreditados</em></h1>
+  <p>Dedicação, experiência e paixão. Conheça os profissionais que representam a Hinnig Tax & Assets e estão prontos para transformar os seus desafios em oportunidades.</p>
+</div>
+
+<!-- FILTRO -->
+<div class="filtro">
+  <span class="filtro-label">Filtrar por</span>
+  <button class="filtro-btn active" onclick="filtrar('todos',this)">Todos</button>
+  <button class="filtro-btn" onclick="filtrar('lideranca',this)">Liderança</button>
+  <button class="filtro-btn" onclick="filtrar('bdr',this)">BDR</button>
+  <button class="filtro-btn" onclick="filtrar('especialista',this)">Especialistas</button>
+</div>
+
+<!-- AGENTES -->
+<section class="agentes-section">
+
+  <!-- LIDERANÇA -->
+  <div class="destaque-label">Liderança</div>
+  <div class="agentes-grid-destaque">
+
+    <div class="agente-card" data-categoria="lideranca">
+      <div class="agente-foto">
+        <!-- SUBSTITUA src pela foto real: <img src="fotos/renato.jpg" alt="Renato Hinnig"> -->
+        <div class="agente-foto-placeholder">
+          <div class="inicial">R</div>
+          <div class="placeholder-texto">Adicionar foto</div>
+        </div>
+        <div class="agente-cargo-badge ceo">CEO</div>
+      </div>
+      <div class="agente-info">
+        <div class="agente-nome">Renato Hinnig</div>
+        <div class="agente-cargo">CEO</div>
+        <div class="agente-divider"></div>
+        <div class="agente-acoes">
+          <a class="agente-whatsapp" href="https://api.whatsapp.com/send/?phone=5548991885454" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.555 4.122 1.528 5.855L.057 23.944l6.266-1.644A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.373l-.36-.213-3.718.976.993-3.62-.234-.372A9.818 9.818 0 1112 21.818z"/></svg>
+            WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="agente-card" data-categoria="lideranca">
+      <div class="agente-foto">
+        <div class="agente-foto-placeholder">
+          <div class="inicial">F</div>
+          <div class="placeholder-texto">Adicionar foto</div>
+        </div>
+        <div class="agente-cargo-badge">Operações</div>
+      </div>
+      <div class="agente-info">
+        <div class="agente-nome">Fernando Silveira</div>
+        <div class="agente-cargo">Operações</div>
+        <div class="agente-divider"></div>
+        <div class="agente-acoes">
+          <a class="agente-whatsapp" href="https://api.whatsapp.com/send/?phone=5548991885454" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.555 4.122 1.528 5.855L.057 23.944l6.266-1.644A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.373l-.36-.213-3.718.976.993-3.62-.234-.372A9.818 9.818 0 1112 21.818z"/></svg>
+            WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="agente-card" data-categoria="especialista">
+      <div class="agente-foto">
+        <div class="agente-foto-placeholder">
+          <div class="inicial">J</div>
+          <div class="placeholder-texto">Adicionar foto</div>
+        </div>
+        <div class="agente-cargo-badge">Especialista</div>
+      </div>
+      <div class="agente-info">
+        <div class="agente-nome">Juscimara Michels</div>
+        <div class="agente-cargo">Assessoria Contábil</div>
+        <div class="agente-divider"></div>
+        <div class="agente-acoes">
+          <a class="agente-whatsapp" href="https://api.whatsapp.com/send/?phone=5548991885454" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.555 4.122 1.528 5.855L.057 23.944l6.266-1.644A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.373l-.36-.213-3.718.976.993-3.62-.234-.372A9.818 9.818 0 1112 21.818z"/></svg>
+            WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BDRs -->
+  <div class="destaque-label">BDR — Business Development Representatives</div>
+  <div class="agentes-grid">
+
+    <div class="agente-card" data-categoria="bdr">
+      <div class="agente-foto">
+        <div class="agente-foto-placeholder"><div class="inicial">E</div><div class="placeholder-texto">Adicionar foto</div></div>
+        <div class="agente-cargo-badge">BDR</div>
+      </div>
+      <div class="agente-info">
+        <div class="agente-nome">Eugenio de Souza Martinez</div>
+        <div class="agente-cargo">BDR</div>
+        <div class="agente-divider"></div>
+        <div class="agente-acoes"><a class="agente-whatsapp" href="https://api.whatsapp.com/send/?phone=5548991885454" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.555 4.122 1.528 5.855L.057 23.944l6.266-1.644A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.373l-.36-.213-3.718.976.993-3.62-.234-.372A9.818 9.818 0 1112 21.818z"/></svg>WhatsApp</a></div>
+      </div>
+    </div>
+
+    <div class="agente-card" data-categoria="bdr">
+      <div class="agente-foto">
+        <div class="agente-foto-placeholder"><div class="inicial">L</div><div class="placeholder-texto">Adicionar foto</div></div>
+        <div class="agente-cargo-badge">BDR</div>
+      </div>
+      <div class="agente-info">
+        <div class="agente-nome">Luciano Buligon</div>
+        <div class="agente-cargo">BDR</div>
+        <div class="agente-divider"></div>
+        <div class="agente-acoes"><a class="agente-whatsapp" href="https://api.whatsapp.com/send/?phone=5548991885454" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.555 4.122 1.528 5.855L.057 23.944l6.266-1.644A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.373l-.36-.213-3.718.976.993-3.62-.234-.372A9.818 9.818 0 1112 21.818z"/></svg>WhatsApp</a></div>
+      </div>
+    </div>
+
+    <div class="agente-card" data-categoria="bdr">
+      <div class="agente-foto">
+        <div class="agente-foto-placeholder"><div class="inicial">A</div><div class="placeholder-texto">Adicionar foto</div></div>
+        <div class="agente-cargo-badge">BDR</div>
+      </div>
+      <div class="agente-info">
+        <div class="agente-nome">Antoninho Tibúrcio Gonçalves</div>
+        <div class="agente-cargo">BDR</div>
+        <div class="agente-divider"></div>
+        <div class="agente-acoes"><a class="agente-whatsapp" href="https://api.whatsapp.com/send/?phone=5548991885454" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.555 4.122 1.528 5.855L.057 23.944l6.266-1.644A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.373l-.36-.213-3.718.976.993-3.62-.234-.372A9.818 9.818 0 1112 21.818z"/></svg>WhatsApp</a></div>
+      </div>
+    </div>
+
+    <div class="agente-card" data-categoria="bdr">
+      <div class="agente-foto">
+        <div class="agente-foto-placeholder"><div class="inicial">M</div><div class="placeholder-texto">Adicionar foto</div></div>
+        <div class="agente-cargo-badge">BDR</div>
+      </div>
+      <div class="agente-info">
+        <div class="agente-nome">Marcos Roberto Alessio</div>
+        <div class="agente-cargo">BDR</div>
+        <div class="agente-divider"></div>
+        <div class="agente-acoes"><a class="agente-whatsapp" href="https://api.whatsapp.com/send/?phone=5548991885454" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.555 4.122 1.528 5.855L.057 23.944l6.266-1.644A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.373l-.36-.213-3.718.976.993-3.62-.234-.372A9.818 9.818 0 1112 21.818z"/></svg>WhatsApp</a></div>
+      </div>
+    </div>
+
+    <div class="agente-card" data-categoria="bdr">
+      <div class="agente-foto">
+        <div class="agente-foto-placeholder"><div class="inicial">C</div><div class="placeholder-texto">Adicionar foto</div></div>
+        <div class="agente-cargo-badge">BDR</div>
+      </div>
+      <div class="agente-info">
+        <div class="agente-nome">Crisanto Soares Ribeiro</div>
+        <div class="agente-cargo">BDR</div>
+        <div class="agente-divider"></div>
+        <div class="agente-acoes"><a class="agente-whatsapp" href="https://api.whatsapp.com/send/?phone=5548991885454" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.555 4.122 1.528 5.855L.057 23.944l6.266-1.644A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.373l-.36-.213-3.718.976.993-3.62-.234-.372A9.818 9.818 0 1112 21.818z"/></svg>WhatsApp</a></div>
+      </div>
+    </div>
+
+    <div class="agente-card" data-categoria="bdr">
+      <div class="agente-foto">
+        <div class="agente-foto-placeholder"><div class="inicial">C</div><div class="placeholder-texto">Adicionar foto</div></div>
+        <div class="agente-cargo-badge">BDR</div>
+      </div>
+      <div class="agente-info">
+        <div class="agente-nome">Cristina Valentini</div>
+        <div class="agente-cargo">BDR</div>
+        <div class="agente-divider"></div>
+        <div class="agente-acoes"><a class="agente-whatsapp" href="https://api.whatsapp.com/send/?phone=5548991885454" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.555 4.122 1.528 5.855L.057 23.944l6.266-1.644A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.373l-.36-.213-3.718.976.993-3.62-.234-.372A9.818 9.818 0 1112 21.818z"/></svg>WhatsApp</a></div>
+      </div>
+    </div>
+
+    <div class="agente-card" data-categoria="bdr">
+      <div class="agente-foto">
+        <div class="agente-foto-placeholder"><div class="inicial">A</div><div class="placeholder-texto">Adicionar foto</div></div>
+        <div class="agente-cargo-badge">BDR</div>
+      </div>
+      <div class="agente-info">
+        <div class="agente-nome">Angela Alcantara Mangueira</div>
+        <div class="agente-cargo">BDR</div>
+        <div class="agente-divider"></div>
+        <div class="agente-acoes"><a class="agente-whatsapp" href="https://api.whatsapp.com/send/?phone=5548991885454" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.555 4.122 1.528 5.855L.057 23.944l6.266-1.644A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.373l-.36-.213-3.718.976.993-3.62-.234-.372A9.818 9.818 0 1112 21.818z"/></svg>WhatsApp</a></div>
+      </div>
+    </div>
+
+    <div class="agente-card" data-categoria="bdr">
+      <div class="agente-foto">
+        <div class="agente-foto-placeholder"><div class="inicial">M</div><div class="placeholder-texto">Adicionar foto</div></div>
+        <div class="agente-cargo-badge">BDR — RH</div>
+      </div>
+      <div class="agente-info">
+        <div class="agente-nome">Marcirio Coracini</div>
+        <div class="agente-cargo">BDR — RH</div>
+        <div class="agente-divider"></div>
+        <div class="agente-acoes"><a class="agente-whatsapp" href="https://api.whatsapp.com/send/?phone=5548991885454" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.555 4.122 1.528 5.855L.057 23.944l6.266-1.644A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.373l-.36-.213-3.718.976.993-3.62-.234-.372A9.818 9.818 0 1112 21.818z"/></svg>WhatsApp</a></div>
+      </div>
+    </div>
+
+    <div class="agente-card" data-categoria="bdr">
+      <div class="agente-foto">
+        <div class="agente-foto-placeholder"><div class="inicial">M</div><div class="placeholder-texto">Adicionar foto</div></div>
+        <div class="agente-cargo-badge">BDR — RH</div>
+      </div>
+      <div class="agente-info">
+        <div class="agente-nome">Mayara Baptista Freire</div>
+        <div class="agente-cargo">BDR — RH</div>
+        <div class="agente-divider"></div>
+        <div class="agente-acoes"><a class="agente-whatsapp" href="https://api.whatsapp.com/send/?phone=5548991885454" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.555 4.122 1.528 5.855L.057 23.944l6.266-1.644A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.373l-.36-.213-3.718.976.993-3.62-.234-.372A9.818 9.818 0 1112 21.818z"/></svg>WhatsApp</a></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-bottom">
+  <div class="section-tag" style="display:inline-flex;align-items:center;gap:0.6rem;margin-bottom:1rem;">
+    <div style="width:24px;height:1px;background:var(--gold);"></div>
+    <span style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:500;">Faça parte</span>
+  </div>
+  <h2>Quer ser um agente <em>Hinnig</em>?</h2>
+  <p>Junte-se à nossa rede de agentes acreditados e faça parte de uma equipe comprometida com <strong>resultados reais</strong>.</p>
+  <button class="btn-black">Entre em contato</button>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">HINNIG <span>TAX & ASSETS</span></div>
+  <div class="footer-copy">© 2025 Hinnig Tax & Assets. Todos os direitos reservados.</div>
+</footer>
+
+<script>
+function filtrar(categoria, btn) {
+  document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.agente-card').forEach(card => {
+    if (categoria === 'todos' || card.dataset.categoria === categoria) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+</script>
+
+</body>
+</html>
