@@ -1,3 +1,5 @@
+bash
+
 mkdir -p /mnt/user-data/outputs/hinnig-site
 cat > /mnt/user-data/outputs/hinnig-site/style.css << 'EOF'
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -137,3 +139,6 @@ footer{background:var(--black);padding:3rem 5rem;display:flex;align-items:center
 }
 EOF
 echo "CSS OK"
+Saída
+
+CSS OK
