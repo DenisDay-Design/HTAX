@@ -1,57 +1,45 @@
-bash
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operação PERSE — Hinnig Tax & Assets</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo" style="text-decoration:none;">
+    <img src="logo.svg" alt="Hinnig Tax & Assets" class="logo-svg">
+    <div class="nav-brand">HINNIG <span>TAX &amp; ASSETS</span></div>
+  </a>
 
-FOOTER='<footer>
-  <div class="footer-brand">HINNIG <span>TAX &amp; ASSETS</span></div>
-  <div class="footer-copy">&copy; 2025 Hinnig Tax &amp; Assets. Todos os direitos reservados.</div>
-</footer>
-</body></html>'
-
-OUTROS='<section class="outros-servicos">
-  <div class="section-tag"><div class="section-tag-line"></div><span>Outras soluções</span></div>
-  <h2>Conheça nossos <em>outros serviços</em></h2>
-  <div class="outros-grid">
-    <a class="outro-card" href="sistema-s.html"><div class="outro-card-num">01</div><h4>Sistema S</h4><p>Alívio tributário legal</p></a>
-    <a class="outro-card" href="pgfn-inss.html"><div class="outro-card-num">02</div><h4>Quitação PGFN — INSS</h4><p>Pague INSS com créditos judiciais</p></a>
-    <a class="outro-card" href="financiamento.html"><div class="outro-card-num">03</div><h4>Financiamento Internacional</h4><p>Private Hard Lender estruturado</p></a>
-    <a class="outro-card" href="perse.html"><div class="outro-card-num">04</div><h4>Operação PERSE</h4><p>Recuperação tributária especializada</p></a>
-    <a class="outro-card" href="passivos.html"><div class="outro-card-num">05</div><h4>Liquidação de Passivos</h4><p>Gestão de crise financeira</p></a>
-  </div>
-</section>'
-
-NAV_BASE='<nav>
-  <a class="nav-logo" href="index.html"><div class="nav-logo-circle">H</div><div class="nav-brand">HINNIG <span>TAX &amp; ASSETS</span></div></a>
   <ul class="nav-links">
     <li><a href="index.html">Início</a></li>
-    <li class="nav-dropdown"><a href="servicos.html" class="active">Soluções ▾</a>
+
+    <li class="nav-dropdown">
+      <a href="servicos.html" class="active">Soluções</a>
       <div class="nav-dropdown-menu">
+        <a href="servicos.html">Todas as Soluções</a>
         <a href="sistema-s.html">Sistema S</a>
-        <a href="pgfn-inss.html">Quitação PGFN — INSS</a>
-        <a href="financiamento.html">Financiamento Internacional</a>
-        <a href="perse.html">Operação PERSE</a>
-        <a href="passivos.html">Liquidação de Passivos</a>
+        <a href="pgfn-inss.html">PGFN / INSS</a>
+        <a href="financiamento.html">Financiamentos</a>
+        <a href="perse.html">PERSE</a>
+        <a href="passivos.html">Passivos Tributários</a>
       </div>
     </li>
+
+    <li><a href="index.html#sobre">Sobre</a></li>
     <li><a href="agentes.html">Agentes</a></li>
     <li><a href="parceiros.html">Parceiros</a></li>
     <li><a href="contato.html">Contato</a></li>
   </ul>
+
   <a class="nav-cta" href="contato.html">Diagnóstico gratuito</a>
-</nav>'
+</nav>
 
-HEAD_BASE='<!DOCTYPE html>
-<html lang="pt-BR">
-<head> <link rel="stylesheet" href="style.css">
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">'
-
-# ─── perse.html ───
-cat > /mnt/user-data/outputs/hinnig-site/perse.html << HTMLEOF
-${HEAD_BASE}
-<title>Operação PERSE — Hinnig Tax & Assets</title>
-</head><body>
-${NAV_BASE}
-
+<!-- HERO -->
 <div class="page-hero">
   <div class="page-hero-inner">
     <div class="page-tag"><div class="page-tag-line"></div><span>Solução 04</span></div>
@@ -60,86 +48,141 @@ ${NAV_BASE}
   </div>
 </div>
 
+<!-- VISÃO GERAL -->
 <section class="section">
   <div class="two-col">
     <div class="two-col-text">
       <div class="section-tag"><div class="section-tag-line"></div><span>O que é</span></div>
       <h2 class="section-title">Entenda a <em>Operação PERSE</em></h2>
       <div class="divider"></div>
+
       <p>O PERSE — Programa Emergencial de Retomada do Setor de Eventos — foi criado para beneficiar empresas impactadas pela pandemia, oferecendo <strong>alíquota zero para IRPJ, CSLL, PIS e COFINS</strong> durante o período de vigência.</p>
+
       <p>A legislação passou por diversas alterações ao longo do tempo, criando <strong>oportunidades para empresas recuperarem valores significativos</strong> pagos de forma indevida. Nossa equipe analisa cada caso com precisão para maximizar a recuperação.</p>
+
       <div style="margin-top:2rem;display:flex;gap:1rem;flex-wrap:wrap;">
         <a class="btn-black" href="contato.html">Verificar elegibilidade</a>
         <a class="btn-outline-dark" href="https://api.whatsapp.com/send/?phone=5548991885454" target="_blank">WhatsApp</a>
       </div>
     </div>
+
     <div>
       <div class="destaque-box" style="margin-top:0;">
         <h3>Base Legal Sólida</h3>
-        <p>Atuamos com respaldo na legislação vigente: <strong>Lei 14.148/2021</strong> (PERSE), Medida Provisória nº 1.147/2022, Lei 14.592/2023 e demais regulamentações, adotando as interpretações mais favoráveis ao contribuinte com base no CTN e na jurisprudência dos tribunais superiores.</p>
+        <p>Atuamos com respaldo na legislação vigente, adotando interpretações favoráveis ao contribuinte com base no CTN e na jurisprudência dos tribunais superiores.</p>
       </div>
+
       <div class="destaque-box">
         <h3>Equipe Especializada</h3>
-        <p>Contamos com profissionais <strong>especializados e sempre atualizados</strong> sobre as mudanças na legislação do PERSE, com experiência comprovada na recuperação de tributos para diversas empresas.</p>
+        <p>Contamos com profissionais <strong>especializados e sempre atualizados</strong> sobre as mudanças na legislação do PERSE.</p>
       </div>
     </div>
   </div>
 </section>
 
+<!-- PROCESSO -->
 <section class="section" style="background:var(--off-white);border-top:1px solid var(--border);">
   <div class="section-tag"><div class="section-tag-line"></div><span>Como atuamos</span></div>
   <h2 class="section-title">Nossa <em>abordagem completa</em></h2>
+
   <div class="steps">
-    <div class="step"><div class="step-num">01</div><h4>Análise de Elegibilidade</h4><p>Analisamos sua situação específica e identificamos se sua empresa <strong>se enquadra nos critérios</strong>, mesmo com as mudanças na legislação.</p></div>
+    <div class="step"><div class="step-num">01</div><h4>Análise de Elegibilidade</h4><p>Analisamos sua situação específica e identificamos se sua empresa <strong>se enquadra nos critérios</strong>.</p></div>
     <div class="step"><div class="step-num">02</div><h4>Levantamento de Valores</h4><p>Realizamos o levantamento detalhado de todos os <strong>valores pagos indevidamente</strong> passíveis de recuperação.</p></div>
-    <div class="step"><div class="step-num">03</div><h4>Documentação Completa</h4><p>Preparamos e apresentamos todos os <strong>documentos necessários</strong> para a recuperação de tributos junto à Receita Federal.</p></div>
-    <div class="step"><div class="step-num">04</div><h4>Acompanhamento Integral</h4><p>Acompanhamos cada etapa do processo diretamente com a Receita Federal, garantindo <strong>agilidade e segurança</strong>.</p></div>
+    <div class="step"><div class="step-num">03</div><h4>Documentação Completa</h4><p>Preparamos todos os <strong>documentos necessários</strong> para a recuperação de tributos junto à Receita Federal.</p></div>
+    <div class="step"><div class="step-num">04</div><h4>Acompanhamento Integral</h4><p>Acompanhamos cada etapa do processo, garantindo <strong>agilidade e segurança</strong>.</p></div>
   </div>
 </section>
 
+<!-- DIFERENCIAIS -->
 <section class="section">
   <div class="section-tag"><div class="section-tag-line"></div><span>Diferenciais</span></div>
   <h2 class="section-title">Por que escolher a <em>Hinnig</em> para o PERSE?</h2>
+
   <div class="cards-grid-2" style="margin-top:2.5rem;">
     <div class="feature-card">
       <div class="feature-card-num">01</div>
       <h3>Experiência Comprovada</h3>
-      <p>Já ajudamos diversas empresas a recuperarem <strong>valores significativos</strong> com eficiência, clareza e total transparência no processo.</p>
+      <p>Já ajudamos diversas empresas a recuperarem <strong>valores significativos</strong> com eficiência, clareza e transparência.</p>
     </div>
+
     <div class="feature-card">
       <div class="feature-card-num">02</div>
       <h3>Análise Minuciosa</h3>
-      <p>Realizamos uma análise completa e personalizada do seu caso para <strong>maximizar a recuperação de tributos</strong>, considerando todas as interpretações favoráveis ao contribuinte.</p>
+      <p>Realizamos uma análise completa e personalizada para <strong>maximizar a recuperação de tributos</strong>.</p>
     </div>
+
     <div class="feature-card">
       <div class="feature-card-num">03</div>
-      <h3>Sem Riscos para sua Empresa</h3>
-      <p>Todo o processo é fundamentado em <strong>lei e jurisprudência sólida</strong>, garantindo segurança jurídica total na recuperação dos seus valores.</p>
+      <h3>Segurança Jurídica</h3>
+      <p>Todo o processo é fundamentado em <strong>lei e jurisprudência sólida</strong>, garantindo segurança na recuperação dos valores.</p>
     </div>
+
     <div class="feature-card">
       <div class="feature-card-num">04</div>
       <h3>Atualização Constante</h3>
-      <p>Nossa equipe está sempre atenta às <strong>mudanças na legislação do PERSE</strong> para aproveitar novas oportunidades em benefício dos nossos clientes.</p>
+      <p>Nossa equipe acompanha as <strong>mudanças na legislação do PERSE</strong> para aproveitar novas oportunidades.</p>
     </div>
   </div>
 </section>
 
+<!-- CTA -->
 <div class="cta-banner">
   <div>
     <h2>Sua empresa atuou no setor de eventos? Pode ter <em>valores a recuperar</em></h2>
-    <p>Fale com nossos especialistas e descubra o quanto sua empresa tem direito a recuperar.</p>
+    <p>Fale com nossos especialistas e descubra quanto sua empresa pode recuperar.</p>
   </div>
+
   <div class="cta-btns">
-    <a class="btn-gold" href="contato.html">Verificar minha elegibilidade</a>
+    <a class="btn-gold" href="contato.html">Verificar elegibilidade</a>
     <a class="btn-white-outline" href="https://api.whatsapp.com/send/?phone=5548991885454" target="_blank">WhatsApp</a>
   </div>
 </div>
+<!-- OUTRAS SOLUÇÕES -->
+<section class="outros-servicos">
+  <div class="section-tag">
+    <div class="section-tag-line"></div>
+    <span>Outras soluções</span>
+  </div>
 
-${OUTROS}
-${FOOTER}
-HTMLEOF
+  <h2>Conheça nossos <em>outros serviços</em></h2>
 
-echo "perse OK"
-Saída
+  <div class="outros-grid">
+    <a class="outro-card" href="sistema-s.html">
+      <div class="outro-card-num">01</div>
+      <h4>Sistema S</h4>
+      <p>Alívio tributário legal para sua empresa</p>
+    </a>
 
-perse OK
+    <a class="outro-card" href="pgfn-inss.html">
+      <div class="outro-card-num">02</div>
+      <h4>PGFN / INSS</h4>
+      <p>Pague INSS com créditos judiciais</p>
+    </a>
+
+    <a class="outro-card" href="financiamento.html">
+      <div class="outro-card-num">03</div>
+      <h4>Financiamento Internacional</h4>
+      <p>Private Hard Lender estruturado</p>
+    </a>
+
+    <a class="outro-card" href="perse.html">
+      <div class="outro-card-num">04</div>
+      <h4>PERSE</h4>
+      <p>Recuperação tributária especializada</p>
+    </a>
+
+    <a class="outro-card" href="passivos.html">
+      <div class="outro-card-num">05</div>
+      <h4>Liquidação de Passivos</h4>
+      <p>Gestão de crise financeira</p>
+    </a>
+  </div>
+</section>
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">HINNIG <span>TAX &amp; ASSETS</span></div>
+  <div class="footer-copy">© 2025 Hinnig Tax &amp; Assets. Todos os direitos reservados.</div>
+</footer>
+
+</body>
+</html>
