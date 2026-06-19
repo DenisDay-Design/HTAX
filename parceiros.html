@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Parceiros — Hinnig Tax & Assets</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<style>
+.parceiros-hero{
+  background:var(--off-white);
+  padding:5.5rem 5rem 4rem;
+  border-bottom:1px solid var(--border);
+  text-align:center;
+}
+
+.parceiros-hero .page-tag{
+  justify-content:center;
+}
+
+.parceiros-hero h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:54px;
+  font-weight:400;
+  line-height:1.1;
+  color:var(--black);
+  margin-bottom:1rem;
+}
+
+.parceiros-hero h1 em{
+  color:var(--gold);
+  font-style:italic;
+}
+
+.parceiros-hero p{
+  font-family:'Montserrat',sans-serif;
+  font-size:15px;
+  line-height:1.9;
+  color:var(--gray);
+  max-width:720px;
+  margin:0 auto;
+}
+
+.parceiros-section{
+  padding:5.5rem 5rem;
+  background:var(--white);
+}
+
+.parceiros-intro{
+  text-align:center;
+  max-width:850px;
+  margin:0 auto 4rem;
+}
+
+.parceiros-intro h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:42px;
+  font-weight:400;
+  line-height:1.15;
+  color:var(--black);
+  margin-bottom:1rem;
+}
+
+.parceiros-intro h2 em{
+  color:var(--gold);
+  font-style:italic;
+}
+
+.parceiros-intro p{
+  font-size:15px;
+  line-height:1.9;
+  color:var(--gray);
+}
+
+.parceiros-carousel{
+  max-width:1120px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  gap:1.5rem;
+  align-items:center;
+}
+
+.parceiros-window{
+  overflow:hidden;
+  width:100%;
+}
+
+.parceiros-track{
+  display:flex;
+  transition:transform .45s ease;
+}
+
+.parceiros-slide{
+  min-width:100%;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;
+}
+
+.parceiro-card{
+  min-height:145px;
+  border:1px solid var(--border);
+  background:var(--white);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:2rem;
+  transition:all .3s;
+  position:relative;
+  overflow:hidden;
+}
+
+.parceiro-card::after{
+  content:'';
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:3px;
+  background:var(--gold);
+  transform:scaleX(0);
+  transition:transform .3s;
+}
+
+.parceiro-card:hover{
+  border-color:var(--gold-light);
+  background:var(--gold-bg);
+  transform:translateY(-3px);
+}
+
+.parceiro-card:hover::after{
+  transform:scaleX(1);
+}
+
+.parceiro-logo{
+  width:100%;
+  max-width:190px;
+  max-height:72px;
+  object-fit:contain;
+  filter:grayscale(100%);
+  opacity:.68;
+  transition:all .3s;
+}
+
+.parceiro-card:hover .parceiro-logo{
+  filter:grayscale(0%);
+  opacity:1;
+}
+
+.parceiros-arrow{
+  width:44px;
+  height:44px;
+  border:1px solid var(--gold);
+  background:var(--white);
+  color:var(--gold);
+  font-size:34px;
+  line-height:1;
+  cursor:pointer;
+  transition:all .3s;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.parceiros-arrow:hover{
+  background:var(--gold);
+  color:var(--black);
+}
+
+.parceiros-dots{
+  display:flex;
+  justify-content:center;
+  gap:.6rem;
+  margin-top:2rem;
+}
+
+.parceiros-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  border:1px solid var(--gold);
+  background:transparent;
+  cursor:pointer;
+  transition:all .3s;
+}
+
+.parceiros-dot.active{
+  background:var(--gold);
+  transform:scale(1.2);
+}
+
+.parceiros-note{
+  max-width:760px;
+  margin:3.5rem auto 0;
+  text-align:center;
+  font-size:13px;
+  line-height:1.9;
+  color:var(--gray-light);
+}
+
+.parceiros-cta{
+  background:var(--black);
+  padding:5rem;
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:4rem;
+  align-items:center;
+}
+
+.parceiros-cta h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:42px;
+  font-weight:400;
+  line-height:1.15;
+  color:var(--white);
+}
+
+.parceiros-cta h2 em{
+  color:var(--gold);
+  font-style:italic;
+}
+
+.parceiros-cta p{
+  color:rgba(255,255,255,.58);
+  font-size:14px;
+  line-height:1.8;
+  margin-top:.7rem;
+  max-width:620px;
+}
+
+@media(max-width:768px){
+  .parceiros-hero,
+  .parceiros-section{
+    padding:4rem 1.5rem;
+  }
+
+  .parceiros-hero h1{
+    font-size:40px;
+  }
+
+  .parceiros-intro h2{
+    font-size:34px;
+  }
+
+  .parceiros-carousel{
+    grid-template-columns:1fr;
+  }
+
+  .parceiros-slide{
+    grid-template-columns:1fr;
+  }
+
+  .parceiros-arrow{
+    margin:0 auto;
+  }
+
+  .parceiros-cta{
+    grid-template-columns:1fr;
+    padding:4rem 1.5rem;
+    gap:2rem;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo" style="text-decoration:none;">
+    <div class="nav-logo-circle">H</div>
+    <div class="nav-brand">HINNIG <span>TAX &amp; ASSETS</span></div>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="index.html">Início</a></li>
+
+    <li class="nav-dropdown">
+      <a href="servicos.html">Soluções</a>
+      <div class="nav-dropdown-menu">
+        <a href="servicos.html">Todas as Soluções</a>
+        <a href="sistema-s.html">Sistema S</a>
+        <a href="pgfn-inss.html">PGFN / INSS</a>
+        <a href="financiamento.html">Financiamentos</a>
+        <a href="perse.html">PERSE</a>
+        <a href="passivos.html">Passivos Tributários</a>
+      </div>
+    </li>
+
+    <li><a href="index.html#sobre">Sobre</a></li>
+    <li><a href="agentes.html">Agentes</a></li>
+    <li><a href="parceiros.html" class="active">Parceiros</a></li>
+    <li><a href="contato.html">Contato</a></li>
+  </ul>
+
+  <a class="nav-cta" href="contato.html#contato">Diagnóstico gratuito</a>
+</nav>
+
+<!-- HERO -->
+<div class="parceiros-hero">
+  <div class="page-tag">
+    <div class="page-tag-line"></div>
+    <span>Rede estratégica</span>
+  </div>
+
+  <h1>Empresas que caminham com a <em>Hinnig</em></h1>
+
+  <p>Ao longo da nossa trajetória, construímos relações com empresas e parceiros que valorizam estratégia, segurança, conformidade fiscal e eficiência na gestão empresarial.</p>
+</div>
+
+<!-- PARCEIROS -->
+<section class="parceiros-section">
+  <div class="parceiros-intro">
+    <div class="section-tag" style="justify-content:center;">
+      <div class="section-tag-line"></div>
+      <span>Parceiros & clientes</span>
+    </div>
+
+    <h2>Essas empresas confiam na <em>Hinnig</em> para avançar com segurança</h2>
+
+    <p>Uma rede formada por negócios que entendem a importância de decisões bem estruturadas, análise qualificada e visão estratégica para crescer com mais previsibilidade.</p>
+  </div>
+
+  <div class="parceiros-carousel">
+
+    <button class="parceiros-arrow" type="button" onclick="mudarParceiros(-1)" aria-label="Parceiros anteriores">‹</button>
+
+    <div class="parceiros-window">
+      <div class="parceiros-track" id="parceirosTrack">
+
+        <!-- SLIDE 01 -->
+        <div class="parceiros-slide">
+          <div class="parceiro-card">
+            <img class="parceiro-logo" src="logos/trevisan.png" alt="Trevisan">
+          </div>
+
+          <div class="parceiro-card">
+            <img class="parceiro-logo" src="logos/mcdonalds.png" alt="McDonald's">
+          </div>
+
+          <div class="parceiro-card">
+            <img class="parceiro-logo" src="logos/viasul.png" alt="VIASUL Engenharia">
+          </div>
+
+          <div class="parceiro-card">
+            <img class="parceiro-logo" src="logos/casa-terra.png" alt="Casa & Terra">
+          </div>
+
+          <div class="parceiro-card">
+            <img class="parceiro-logo" src="logos/totvs.png" alt="TOTVS">
+          </div>
+
+          <div class="parceiro-card">
+            <img class="parceiro-logo" src="logos/matific.png" alt="Matific">
+          </div>
+        </div>
+
+        <!-- SLIDE 02 -->
+        <div class="parceiros-slide">
+          <div class="parceiro-card">
+            <img class="parceiro-logo" src="logos/parceiro-07.png" alt="Parceiro 07">
+          </div>
+
+          <div class="parceiro-card">
+            <img class="parceiro-logo" src="logos/parceiro-08.png" alt="Parceiro 08">
+          </div>
+
+          <div class="parceiro-card">
+            <img class="parceiro-logo" src="logos/parceiro-09.png" alt="Parceiro 09">
+          </div>
+
+          <div class="parceiro-card">
+            <img class="parceiro-logo" src="logos/parceiro-10.png" alt="Parceiro 10">
+          </div>
+
+          <div class="parceiro-card">
+            <img class="parceiro-logo" src="logos/parceiro-11.png" alt="Parceiro 11">
+          </div>
+
+          <div class="parceiro-card">
+            <img class="parceiro-logo" src="logos/parceiro-12.png" alt="Parceiro 12">
+          </div>
+        </div>
+
+        <!-- SLIDE 03 -->
+        <div class="parceiros-slide">
+          <div class="parceiro-card">
+            <img class="parceiro-logo" src="logos/parceiro-13.png" alt="Parceiro 13">
+          </div>
+
+          <div class="parceiro-card">
+            <img class="parceiro-logo" src="logos/parceiro-14.png" alt="Parceiro 14">
+          </div>
+
+          <div class="parceiro-card">
+            <img class="parceiro-logo" src="logos/parceiro-15.png" alt="Parceiro 15">
+          </div>
+
+          <div class="parceiro-card">
+            <img class="parceiro-logo" src="logos/parceiro-16.png" alt="Parceiro 16">
+          </div>
+
+          <div class="parceiro-card">
+            <img class="parceiro-logo" src="logos/parceiro-17.png" alt="Parceiro 17">
+          </div>
+
+          <div class="parceiro-card">
+            <img class="parceiro-logo" src="logos/parceiro-18.png" alt="Parceiro 18">
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <button class="parceiros-arrow" type="button" onclick="mudarParceiros(1)" aria-label="Próximos parceiros">›</button>
+
+  </div>
+
+  <div class="parceiros-dots" id="parceirosDots">
+    <button class="parceiros-dot active" type="button" onclick="irParaParceiros(0)" aria-label="Slide 1"></button>
+    <button class="parceiros-dot" type="button" onclick="irParaParceiros(1)" aria-label="Slide 2"></button>
+    <button class="parceiros-dot" type="button" onclick="irParaParceiros(2)" aria-label="Slide 3"></button>
+  </div>
+
+  <p class="parceiros-note">Para substituir uma logo, coloque a imagem na pasta <strong>logos</strong> e troque apenas o caminho dentro do <strong>src</strong>, por exemplo: <strong>src="logos/nome-da-logo.png"</strong>.</p>
+</section>
+
+<!-- CTA -->
+<div class="parceiros-cta">
+  <div>
+    <h2>Quer construir uma parceria <em>estratégica</em> com a Hinnig?</h2>
+    <p>Fale com nossa equipe e entenda como podemos criar uma relação orientada a resultado, segurança e crescimento sustentável.</p>
+  </div>
+
+  <div class="cta-btns">
+    <a class="btn-gold" href="contato.html#contato">Entrar em contato</a>
+    <a class="btn-white-outline" href="https://wa.me/5548991885454?text=Olá,%20gostaria%20de%20falar%20sobre%20uma%20parceria%20com%20a%20Hinnig." target="_blank">WhatsApp</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">HINNIG <span>TAX & ASSETS</span></div>
+  <div class="footer-copy">© 2025 Hinnig Tax & Assets. Todos os direitos reservados.</div>
+</footer>
+
+<script>
+let parceiroAtual = 0;
+
+function atualizarParceiros(){
+  const track = document.getElementById('parceirosTrack');
+  const dots = document.querySelectorAll('.parceiros-dot');
+  const totalSlides = document.querySelectorAll('.parceiros-slide').length;
+
+  if(parceiroAtual < 0){
+    parceiroAtual = totalSlides - 1;
+  }
+
+  if(parceiroAtual >= totalSlides){
+    parceiroAtual = 0;
+  }
+
+  track.style.transform = `translateX(-${parceiroAtual * 100}%)`;
+
+  dots.forEach((dot, index) => {
+    dot.classList.toggle('active', index === parceiroAtual);
+  });
+}
+
+function mudarParceiros(direcao){
+  parceiroAtual += direcao;
+  atualizarParceiros();
+}
+
+function irParaParceiros(index){
+  parceiroAtual = index;
+  atualizarParceiros();
+}
+</script>
+
+</body>
+</html>
