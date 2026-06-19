@@ -543,80 +543,177 @@ blockquote,
 }
 
 
+
 /* =========================================================
-   PADRÃO ÚNICO DE LOGO — HINNIG
-   Usa sempre o arquivo logo.svg na raiz do GitHub.
+   HEADER PADRÃO HINNIG — CORRIGIDO
+   Mantém logo.svg sem quebrar a navbar.
 ========================================================= */
 
-.logo-svg{
-  width:60px;
-  height:60px;
-  object-fit:contain;
-  display:block;
+#hdr{
+  background:var(--white,#fff);
+  border-bottom:1px solid var(--border,#E8E2D6);
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+
+.hinnig-header{
+  height:88px;
+  padding:0 5rem;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:2rem;
+  background:var(--white,#fff);
+}
+
+.header-brand{
+  display:flex;
+  align-items:center;
+  gap:.9rem;
+  text-decoration:none;
   flex-shrink:0;
 }
 
-.brand,
-.nav-logo{
-  display:flex;
-  align-items:center;
-  gap:.8rem;
-  text-decoration:none;
+.header-logo{
+  width:60px !important;
+  height:60px !important;
+  max-width:60px !important;
+  max-height:60px !important;
+  object-fit:contain !important;
+  display:block;
+  border-radius:50%;
+  flex-shrink:0;
 }
 
-.brand .nav-brand,
-.nav-logo .nav-brand{
+.header-brand-text{
   font-family:'Cormorant Garamond',serif;
   font-size:18px;
   font-weight:600;
   letter-spacing:3px;
-  color:var(--black, #111111);
+  color:var(--black,#111);
   white-space:nowrap;
 }
 
-.brand .nav-brand span,
-.nav-logo .nav-brand span{
-  color:var(--gold, #B8922A);
+.header-brand-text span{
+  color:var(--gold,#B8922A);
 }
 
-.sobre-logo-big,
-.logo-big-img,
-.form img[src="logo.svg"],
-.form-side img[src="logo.svg"],
-img[alt="Selo Hinnig Tax & Assets"],
-img[alt="Hinnig Tax & Assets"]{
-  width:130px;
-  height:130px;
-  object-fit:contain;
+.header-links{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:2.2rem;
+  list-style:none;
+  margin:0;
+  padding:0;
+  flex:1;
+}
+
+.header-links a{
+  font-family:'Montserrat',sans-serif;
+  text-decoration:none;
+  color:var(--gray,#555);
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  transition:color .3s;
+  white-space:nowrap;
+}
+
+.header-links a:hover,
+.header-links a.active{
+  color:var(--gold,#B8922A);
+}
+
+.header-cta{
+  background:var(--black,#111);
+  color:var(--white,#fff);
+  text-decoration:none;
+  padding:.8rem 1.8rem;
+  font-family:'Montserrat',sans-serif;
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  font-weight:600;
+  transition:all .3s;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+
+.header-cta:hover{
+  background:var(--gold,#B8922A);
+  color:var(--black,#111);
+}
+
+.nav-dropdown{
+  position:relative;
+}
+
+.nav-dropdown-menu{
+  display:none;
+  position:absolute;
+  top:100%;
+  left:0;
+  background:var(--white,#fff);
+  border:1px solid var(--border,#E8E2D6);
+  min-width:260px;
+  padding:.5rem 0;
+  z-index:9999;
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+.nav-dropdown:hover .nav-dropdown-menu{
   display:block;
-  border-radius:50%;
 }
 
-@media(max-width:768px){
-  .logo-svg{
-    width:48px;
-    height:48px;
+.nav-dropdown-menu a{
+  display:block;
+  padding:.8rem 1.4rem;
+}
+
+@media(max-width:900px){
+  .hinnig-header{
+    height:auto;
+    min-height:82px;
+    padding:1rem 1.5rem;
   }
 
-  .brand .nav-brand,
-  .nav-logo .nav-brand{
+  .header-logo{
+    width:48px !important;
+    height:48px !important;
+    max-width:48px !important;
+    max-height:48px !important;
+  }
+
+  .header-brand-text{
     font-size:15px;
     letter-spacing:2px;
+  }
+
+  .header-links{
+    display:none;
+  }
+
+  .header-cta{
+    padding:.7rem 1rem;
+    font-size:10px;
   }
 }
 
 </style></head>
 <body>
 <header id="hdr">
-  <div class="wrap nav">
-    <a aria-label="Hinnig Tax and Assets - início" class="brand" href="index.html">
-      <img src="logo.svg" alt="Hinnig Tax & Assets" class="logo-svg">
-      <div class="nav-brand">HINNIG <span>TAX &amp; ASSETS</span></div>
+  <nav class="hinnig-header">
+    <a href="index.html" class="header-brand" aria-label="Hinnig Tax & Assets - início">
+      <img src="logo.svg" alt="Hinnig Tax & Assets" class="header-logo">
+      <div class="header-brand-text">HINNIG <span>TAX &amp; ASSETS</span></div>
     </a>
 
-    <nav class="navlinks" aria-label="Navegação principal">
-      <a href="index.html">Início</a>
-      <div class="nav-dropdown">
+    <ul class="header-links">
+      <li><a href="index.html">Início</a></li>
+
+      <li class="nav-dropdown">
         <a href="servicos.html">Soluções</a>
         <div class="nav-dropdown-menu">
           <a href="servicos.html">Todas as Soluções</a>
@@ -626,14 +723,16 @@ img[alt="Hinnig Tax & Assets"]{
           <a href="perse.html">PERSE</a>
           <a href="passivos.html">Passivos Tributários</a>
         </div>
-      </div>
-      <a href="index.html#sobre">Sobre</a>
-      <a href="agentes.html">Agentes</a>
-      <a href="parceiros.html">Parceiros</a>
-    </nav>
+      </li>
 
-    <a class="nav-cta" href="#conversa">Diagnóstico gratuito</a>
-  </div>
+      <li><a href="index.html#sobre">Sobre</a></li>
+      <li><a href="agentes.html">Agentes</a></li>
+      <li><a href="parceiros.html">Parceiros</a></li>
+      <li><a href="contato.html">Contato</a></li>
+    </ul>
+
+    <a class="header-cta" href="#conversa">Diagnóstico gratuito</a>
+  </nav>
 </header>
 <main id="topo"><section class="hero" id="hero">
 <div class="wrap">
