@@ -1110,7 +1110,20 @@ blockquote,
 <label for="desafio">Principal desafio tributário ou patrimonial hoje</label>
 <textarea id="desafio" name="desafio" placeholder="Em poucas linhas, o que mais pesa no seu caixa ou na sua estrutura."></textarea>
 </div>
-<button class="btn btn-primary submit" type="submit">Enviar e abrir conversa <span class="arrow">→</span></button>
+<button
+    id="btn-enviar"
+    class="btn btn-primary submit"
+    type="submit">
+    Enviar e abrir conversa
+    <span class="arrow">→</span>
+</button>
+
+<div id="form-msg-ok" style="display:none;" class="form-msg-ok">
+    ✅ Solicitação enviada com sucesso! Em breve entraremos em contato.
+</div>
+
+<div id="form-msg-erro" style="display:none;" class="form-msg-erro">
+</div>
 <p class="priv">Seus dados são usados apenas para retorno da Hinnig Tax &amp; Assets. Nenhuma informação é compartilhada.</p>
 <div class="form-msg" id="formMsg">
 <div class="ok">Recebido.</div>
