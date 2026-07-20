@@ -142,4 +142,25 @@ EOF
 echo "CSS OK"
 Saída
 
+.form-msg-ok{
+    display:none;
+    margin-top:20px;
+    padding:15px 20px;
+    border:1px solid #c7e6c7;
+    background:#eef9ee;
+    color:#2d6a2d;
+    border-radius:6px;
+    font-size:14px;
+}
+
+.form-msg-erro{
+    display:none;
+    margin-top:20px;
+    padding:15px 20px;
+    border:1px solid #f3bcbc;
+    background:#fff2f2;
+    color:#a62b2b;
+    border-radius:6px;
+    font-size:14px;
+}
 CSS OK
