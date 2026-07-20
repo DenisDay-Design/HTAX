@@ -143,7 +143,7 @@
 }
 </style>
 </head>
-
+    
 <body>
 
 <!-- NAV -->
@@ -234,7 +234,11 @@
       </div>
     </div>
 
-    <form class="contato-form">
+<form
+    id="form-contato"
+    class="contato-form"
+    action="contato.php"
+    method="POST">
       <div class="section-tag">
         <div class="section-tag-line"></div>
         <span>Diagnóstico gratuito</span>
@@ -267,25 +271,40 @@
       </div>
 
       <div class="form-group">
-        <label for="solucao">Solução de interesse</label>
-        <select id="solucao" name="solucao">
-          <option value="">Selecione uma opção</option>
-          <option>Sistema S</option>
-          <option>PGFN / INSS</option>
-          <option>Financiamento Internacional</option>
-          <option>PERSE</option>
-          <option>Liquidação de Passivos</option>
-          <option>Ainda não sei</option>
-        </select>
+      <label for="regime">Solução de interesse</label>
+
+<select id="regime" name="regime">
+    <option value="">Selecione uma opção</option>
+    <option value="Sistema S">Sistema S</option>
+    <option value="PGFN / INSS">PGFN / INSS</option>
+    <option value="Financiamento Internacional">Financiamento Internacional</option>
+    <option value="PERSE">PERSE</option>
+    <option value="Liquidação de Passivos">Liquidação de Passivos</option>
+    <option value="Ainda não sei">Ainda não sei</option>
+</select>
       </div>
 
       <div class="form-group">
         <label for="mensagem">Mensagem</label>
-        <textarea id="mensagem" name="mensagem" placeholder="Conte brevemente o que sua empresa precisa resolver."></textarea>
+       <textarea
+id="desafio"
+name="desafio"
+placeholder="Conte brevemente o que sua empresa precisa resolver."></textarea>
       </div>
 
-      <button type="submit" class="btn-black" style="width:100%;">Enviar solicitação</button>
+   <button
+id="btn-enviar"
+type="submit"
+class="btn-black"
+style="width:100%;">
+    Enviar solicitação
+</button>
+<div id="form-msg-ok" class="form-msg-ok">
+    Solicitação enviada com sucesso! Em breve nossa equipe entrará em contato.
+</div>
 
+<div id="form-msg-erro" class="form-msg-erro"></div>
+  
       <p class="contato-small">Este formulário é apenas visual. Para funcionar de verdade no GitHub Pages, é preciso conectar com Formspree, Netlify Forms, WhatsApp ou outro serviço externo.</p>
     </form>
 
@@ -311,5 +330,7 @@
   <div class="footer-copy">© 2025 Hinnig Tax & Assets. Todos os direitos reservados.</div>
 </footer>
 
+<script src="form.js"></script>
+  
 </body>
 </html>
