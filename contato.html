@@ -168,7 +168,6 @@
       </div>
     </li>
 
-    <li><a href="index.html#sobre">Sobre</a></li>
     <li><a href="agentes.html">Agentes</a></li>
     <li><a href="parceiros.html">Parceiros</a></li>
     <li><a href="contato.html" class="active">Contato</a></li>
@@ -249,24 +248,24 @@
       <div class="form-row">
         <div class="form-group">
           <label for="nome">Nome</label>
-          <input type="text" id="nome" name="nome" placeholder="Seu nome">
+          <input type="text" id="nome" name="nome" placeholder="Seu nome" required>
         </div>
 
         <div class="form-group">
           <label for="empresa">Empresa</label>
-          <input type="text" id="empresa" name="empresa" placeholder="Nome da empresa">
+          <input type="text" id="empresa" name="empresa" placeholder="Nome da empresa" required>
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group">
           <label for="telefone">WhatsApp</label>
-          <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000">
+          <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" required>
         </div>
 
         <div class="form-group">
           <label for="email">E-mail</label>
-          <input type="email" id="email" name="email" placeholder="seu@email.com">
+          <input type="email" id="email" name="email" placeholder="seu@email.com" required>
         </div>
       </div>
 
@@ -284,12 +283,22 @@
 </select>
       </div>
 
+      <label class="contato-small" style="display:flex; gap:.6rem; align-items:flex-start; margin:1.2rem 0; cursor:pointer;">
+        <input type="checkbox" name="consentimento_marketing" value="1" style="margin-top:.3rem;">
+        <span>Autorizo o recebimento de comunicações e conteúdos da Hinnig Tax &amp; Assets. Posso cancelar a qualquer momento.</span>
+      </label>
+
       <div class="form-group">
         <label for="mensagem">Mensagem</label>
        <textarea
 id="desafio"
 name="desafio"
 placeholder="Conte brevemente o que sua empresa precisa resolver."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="captcha-resposta" data-captcha-pergunta>Carregando verificação...</label>
+        <input id="captcha-resposta" name="captcha_resposta" inputmode="numeric" required type="text" autocomplete="off" placeholder="Digite o resultado" disabled>
       </div>
 
    <button
@@ -305,7 +314,7 @@ style="width:100%;">
 
 <div id="form-msg-erro" class="form-msg-erro"></div>
   
-      <p class="contato-small">Este formulário é apenas visual. Para funcionar de verdade no GitHub Pages, é preciso conectar com Formspree, Netlify Forms, WhatsApp ou outro serviço externo.</p>
+      <p class="contato-small">Seus dados serão usados para atender sua solicitação. Comunicações de marketing só serão enviadas com sua autorização.</p>
     </form>
 
   </div>
@@ -325,11 +334,14 @@ style="width:100%;">
 </div>
 
 <!-- FOOTER -->
-<footer>
+<footer class="site-footer">
+  <div class="wrap"><div class="foot"><a class="brand" href="index.html">Hinnig <small>Tax &amp; Assets</small></a><nav aria-label="Rodapé" class="foot-links"><a href="index.html#abertura">O jogo</a><a href="index.html#renato">Quem é Renato</a><a href="index.html#atuacao">Atuação</a><a href="index.html#decisao">A decisão</a><a href="index.html#contato">Agendar conversa</a></nav></div><div class="foot-bottom"><span>Hinnig Tax &amp; Assets · Mentoria Legado, Liberdade &amp; Decisão</span><span>Renato Luiz Hinnig · Inteligência tributária e patrimonial</span></div></div>
   <div class="footer-brand">HINNIG <span>TAX &amp; ASSETS</span></div>
   <div class="footer-copy">© 2025 Hinnig Tax & Assets. Todos os direitos reservados.</div>
 </footer>
 
+<script src="responsive.js"></script>
+<script src="captcha.js"></script>
 <script src="form.js"></script>
   
 </body>

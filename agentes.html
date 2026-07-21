@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Agentes — Hinnig Tax & Assets</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
@@ -21,22 +21,16 @@
 body{background:var(--white);color:var(--black);font-family:'Montserrat',sans-serif;font-weight:300;overflow-x:hidden;}
 
 /* NAV */
-nav{background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:1.4rem 5rem;position:sticky;top:0;z-index:100;}
+body > nav{background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:1.4rem 5rem;position:sticky;top:0;z-index:100;}
 .nav-logo{display:flex;align-items:center;gap:0.8rem;text-decoration:none;}
 .nav-logo-circle{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--gold);}
 .nav-brand{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;letter-spacing:3px;color:var(--black);}
 .nav-brand span{color:var(--gold);}
-.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
 .nav-links a{text-decoration:none;color:var(--gray);font-size:11px;letter-spacing:2px;text-transform:uppercase;transition:color 0.3s;}
 .nav-links a:hover,.nav-links a.active{color:var(--gold);}
 .nav-cta{background:var(--black);border:none;color:var(--white);padding:0.65rem 1.6rem;font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:500;cursor:pointer;transition:all 0.3s;}
 .nav-cta:hover{background:var(--gold);}
-   /* DROPDOWN */
-.nav-dropdown{position:relative;}
-.nav-dropdown-menu{display:none;position:absolute;top:100%;left:0;background:var(--white);border:1px solid var(--border);min-width:260px;padding:0.5rem 0;z-index:9999;box-shadow:0 10px 30px rgba(0,0,0,.08);}
-.nav-dropdown:hover .nav-dropdown-menu{display:block;}
-.nav-dropdown-menu a{display:block;padding:0.8rem 1.4rem;font-size:11px;letter-spacing:1px;text-transform:uppercase;text-decoration:none;color:var(--gray);transition:all .3s;}
-.nav-dropdown-menu a:hover{background:var(--gold-bg);color:var(--gold);}
 
 /* HERO DA PÁGINA */
 .page-hero{background:var(--off-white);padding:5rem 5rem 4rem;border-bottom:1px solid var(--border);}
@@ -101,13 +95,13 @@ footer{background:var(--black);padding:3rem 5rem;display:flex;align-items:center
 /* MOBILE */
 @media(max-width:1024px){.agentes-grid{grid-template-columns:repeat(3,1fr);}}
 @media(max-width:768px){
-  nav{padding:1rem 1.5rem;}
+  body > nav{padding:1rem 1.5rem;}
   .nav-links{display:none;}
   .page-hero{padding:4rem 1.5rem 3rem;}
   .page-hero h1{font-size:38px;}
   .filtro{padding:1.5rem;}
   .agentes-section{padding:3rem 1.5rem;}
-  .agentes-grid,.agentes-grid-destaque{grid-template-columns:repeat(2,1fr);gap:1.2rem;}
+  .agentes-grid,.agentes-grid-destaque{grid-template-columns:1fr;gap:1.2rem;}
   .cta-bottom{padding:4rem 1.5rem;}
   footer{padding:2rem 1.5rem;flex-direction:column;gap:0.8rem;text-align:center;}
 }
@@ -115,24 +109,23 @@ footer{background:var(--black);padding:3rem 5rem;display:flex;align-items:center
   .agentes-grid,.agentes-grid-destaque{grid-template-columns:1fr;}
 }
 </style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <a class="nav-logo" href="logo.svg">
+  <a class="nav-logo" href="index.html">
     <div class="nav-logo-circle">H</div>
     <div class="nav-brand">HINNIG <span>TAX & ASSETS</span></div>
   </a>
   <ul class="nav-links">
     <li><a href="index.html">Início</a></li>
-    <li><a href="#">Soluções</a></li>
-    <li><a href="#">Sobre</a></li>
+    <li><a href="servicos.html">Soluções</a></li>
     <li><a href="agentes.html" class="active">Agentes</a></li>
-    <li><a href="#">Parceiros</a></li>
-    <li><a href="contato.html">Contato</a></li>
+    <li><a href="parceiros.html">Parceiros</a></li>
   </ul>
-  <button class="nav-cta">Diagnóstico gratuito</button>
+  <a class="nav-cta" href="contato.html">Diagnóstico gratuito</a>
 </nav>
 
 <!-- HERO DA PÁGINA -->
@@ -271,11 +264,19 @@ footer{background:var(--black);padding:3rem 5rem;display:flex;align-items:center
 </div>
 
 <!-- FOOTER -->
-<footer>
-  <div class="footer-brand">HINNIG <span>TAX & ASSETS</span></div>
-  <div class="footer-copy">© 2025 Hinnig Tax & Assets. Todos os direitos reservados.</div>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot">
+      <a class="brand" href="index.html">Hinnig <small>Tax &amp; Assets</small></a>
+      <nav aria-label="Rodapé" class="foot-links">
+        <a href="index.html#abertura">O jogo</a><a href="index.html#renato">Quem é Renato</a><a href="index.html#atuacao">Atuação</a><a href="index.html#decisao">A decisão</a><a href="index.html#contato">Agendar conversa</a>
+      </nav>
+    </div>
+    <div class="foot-bottom"><span>Hinnig Tax &amp; Assets · Mentoria Legado, Liberdade &amp; Decisão</span><span>Renato Luiz Hinnig · Inteligência tributária e patrimonial</span></div>
+  </div>
 </footer>
 
+<script src="responsive.js"></script>
 <script>
 function filtrar(categoria, btn) {
   document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));

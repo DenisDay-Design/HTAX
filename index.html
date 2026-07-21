@@ -348,7 +348,7 @@ footer{background:var(--ink);color:var(--pewter-2);padding:54px 0 46px}
 .institutional{background:var(--white);color:var(--black);font-family:'Montserrat',sans-serif;font-weight:300;overflow-x:hidden;}
 
 .institutional /* NAV */
-nav{background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:1.4rem 5rem;position:sticky;top:0;z-index:100;}
+header > nav{background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:1.4rem 5rem;position:sticky;top:0;z-index:100;}
 .institutional .nav-logo{display:flex;align-items:center;gap:0.8rem;}
 .institutional .nav-logo-circle{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--gold);}
 .institutional .nav-brand{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;letter-spacing:3px;color:var(--black);}
@@ -455,7 +455,7 @@ footer{background:var(--black);padding:3rem 5rem;display:flex;align-items:center
 
 .institutional /* MOBILE */
 @media(max-width:768px){
-  nav{padding:1rem 1.5rem;}
+  header > nav{padding:1rem 1.5rem;}
   .nav-links{display:none;}
   .hero{padding:4rem 1.5rem;grid-template-columns:1fr;gap:3rem;}
   .hero h1{font-size:42px;}
@@ -701,7 +701,95 @@ blockquote,
   }
 }
 
-</style></head>
+</style>
+<style>
+/* Tipografia unificada e ampliação para leitura mais confortável. */
+html{font-size:112.5%;}
+body,body *,body *::before,body *::after{font-family:'Montserrat',sans-serif !important;}
+body{font-size:1rem;line-height:1.7;}
+.eyebrow,.fineprint,.btn,.nav-list a,.header-cta,.foot-links a,.foot-bottom{font-size:.78rem;}
+.lead{font-size:1.35rem;}
+.mobile-menu-toggle{display:none;background:transparent;border:1px solid var(--border,#E8E2D6);width:44px;height:44px;padding:10px;cursor:pointer;}
+.mobile-menu-toggle span{display:block;width:100%;height:2px;background:var(--black,#111);margin:4px 0;}
+.mobile-only-cta{display:none;}
+@media(max-width:900px){
+  .hinnig-header{gap:.75rem;flex-wrap:wrap;position:relative;}
+  .hinnig-header > .header-cta{display:none;}
+  .hinnig-header .mobile-menu-toggle{display:block;margin-left:auto;}
+  .hinnig-header .header-links.mobile-open{display:flex;order:3;flex-basis:100%;flex-direction:column;align-items:stretch;gap:0;margin:0;padding:0;border-top:1px solid var(--border,#E8E2D6);}
+  .hinnig-header .header-links.mobile-open li{width:100%;border-bottom:1px solid var(--border,#E8E2D6);}
+  .hinnig-header .header-links.mobile-open > li > a{display:block;padding:1rem 0;font-size:.78rem;}
+  .hinnig-header .header-links.mobile-open .nav-dropdown{position:static;}
+  .hinnig-header .header-links.mobile-open .nav-dropdown-menu{display:block;position:static;min-width:0;border:0;border-top:1px solid var(--border,#E8E2D6);box-shadow:none;padding:0;background:#F8F6F2;}
+  .hinnig-header .header-links.mobile-open .nav-dropdown-menu a{padding:.8rem 1rem;font-size:.72rem;}
+  .hinnig-header .mobile-only-cta{display:block;background:var(--black,#111);color:#fff;padding:1rem;text-align:center;}
+}
+@media(max-width:480px){
+  .hero-cta .btn{width:100%;justify-content:center;}
+  .hero-strip{grid-template-columns:1fr;}
+  .hero-strip .cell,.hero-strip .cell:nth-child(2){border-right:0;border-bottom:1px solid var(--line-dark);}
+  .hero-strip .cell:last-child{border-bottom:0;}
+}
+
+/* Cartões institucionais: uma coluna no celular, sem comprimir o conteúdo. */
+@media(max-width:768px){
+  .hero-strip{grid-template-columns:1fr;}
+  .hero-strip .cell,
+  .hero-strip .cell:nth-child(2){border-right:0;border-bottom:1px solid var(--line-dark);}
+  .hero-strip .cell:last-child{border-bottom:0;}
+  .rec-row,
+  .svc,
+  .dec-grid,
+  .row2{grid-template-columns:1fr;}
+  .rec-row{gap:.5rem;}
+  .svc{gap:.5rem;}
+  .svc .num{padding-top:0;}
+  .dec-col:first-child{border-right:none;border-bottom:1px solid var(--line-dark);}
+  .institutional .hero-stats-row{grid-template-columns:1fr;gap:1rem;}
+  .institutional .mvv-grid{
+    grid-template-columns:1fr;
+    gap:1.25rem;
+    margin-top:2rem;
+    border:0;
+  }
+  .institutional .mvv-card,
+  .institutional .mvv-card:last-child{
+    padding:2rem 1.5rem;
+    border:1px solid var(--border);
+  }
+  .institutional .solucoes-header,
+  .institutional .valores-header{
+    grid-template-columns:1fr;
+    gap:1rem;
+    margin-bottom:2rem;
+  }
+  .institutional .solucoes-grid,
+  .institutional .valores-grid{
+    grid-template-columns:1fr;
+    gap:1.25rem;
+  }
+  .institutional .solucao-card,
+  .institutional .valor-item{
+    min-height:0;
+    padding:2rem 1.5rem;
+  }
+  .institutional .solucao-card h3{font-size:1.45rem;}
+  .institutional .solucao-card p{line-height:1.75;}
+  .institutional .cta{padding:4rem 1.5rem;}
+  .institutional .cta-inner{grid-template-columns:1fr;gap:2.5rem;}
+  .institutional .cta-left h2{font-size:2.15rem;}
+  .institutional .cta-left .btn-black{display:flex;width:100%;padding:1rem 1.25rem!important;}
+  .institutional .cta-info-item{padding:1.25rem;}
+  .institutional .cta-info-val{overflow-wrap:anywhere;}
+}
+@media(max-width:480px){
+  .institutional .mvv-card,
+  .institutional .mvv-card:last-child,
+  .institutional .solucao-card,
+  .institutional .valor-item{padding:1.5rem 1.25rem;}
+}
+</style>
+</head>
 <body>
 <header id="hdr">
   <nav class="hinnig-header">
@@ -725,13 +813,12 @@ blockquote,
         </div>
       </li>
 
-      <li><a href="index.html#sobre">Sobre</a></li>
       <li><a href="agentes.html">Agentes</a></li>
       <li><a href="parceiros.html">Parceiros</a></li>
       <li><a href="contato.html">Contato</a></li>
     </ul>
 
-    <a class="header-cta" href="#conversa">Diagnóstico gratuito</a>
+    <a class="header-cta" href="#contato">Diagnóstico gratuito</a>
   </nav>
 </header>
 <main id="topo"><section class="hero" id="hero">
@@ -754,8 +841,8 @@ blockquote,
 <div class="hero-strip">
 <div class="cell reveal"><div class="n">1984</div><div class="l">Início como Auditor Fiscal da Receita Estadual de SC</div></div>
 <div class="cell reveal"><div class="n">2×</div><div class="l">Diretor de Administração Tributária da SEF/SC em governos distintos</div></div>
-<div class="cell reveal"><div class="n">Topo</div><div class="l">Secretário de Estado da Fazenda de Santa Catarina</div></div>
-<div class="cell reveal"><div class="n">2026</div><div class="l">Presente no 10º Congresso Luso-Brasileiro de Auditores Fiscais</div></div>
+<div class="cell reveal"><div class="n">2011</div><div class="l">Secretário de Estado da Fazenda de Santa Catarina</div></div>
+<div class="cell reveal"><div class="n">2026</div><div class="l">Abertura das operações HTAX Hinnig &amp; Assets</div></div>
 </div>
 </div>
 </section><!-- BLOCO INSTITUCIONAL / HOME ATUAL -->
@@ -880,27 +967,6 @@ blockquote,
 </div>
 </div>
 </section>
-<div class="sobre">
-<div class="sobre-left">
-<img src="logo.svg" alt="Hinnig Tax & Assets" class="sobre-logo-big logo-big-img">
-<h2>HINNIG</h2>
-<div class="sobre-sub">Tax &amp; Assets · Desde 2000</div>
-<p>Fundada em 2000, a Hinnig Tax &amp; Assets tem uma <strong style="color:rgba(255,255,255,0.85);">trajetória sólida e repleta de conquistas</strong>. Ao longo dos anos, construímos uma extensa rede global de parceiros de negócios.</p>
-<p>Nossa equipe é composta por <strong style="color:rgba(255,255,255,0.85);">profissionais experientes</strong> que buscam parcerias com empresários, empreendedores e visionários que acreditam no poder da inovação.</p>
-</div>
-<div class="sobre-right">
-<div class="section-tag"><div class="section-tag-line"></div><span>Quem somos</span></div>
-<h2 class="section-title">Sobre a <em>HTA</em></h2>
-<div class="divider"></div>
-<p class="section-sub">Somos uma consultoria especializada em <strong>soluções tributárias e financeiras de alto impacto</strong>. Nossa missão é transformar complexidade em oportunidade, protegendo e expandindo o patrimônio dos nossos clientes com integridade e excelência.</p>
-<div class="sobre-stats">
-<div class="sobre-stat"><div class="sobre-stat-num">25+</div><div class="sobre-stat-label">Anos no mercado</div></div>
-<div class="sobre-stat"><div class="sobre-stat-num">500+</div><div class="sobre-stat-label">Empresas atendidas</div></div>
-<div class="sobre-stat"><div class="sobre-stat-num">5</div><div class="sobre-stat-label">Soluções especializadas</div></div>
-<div class="sobre-stat"><div class="sobre-stat-num">SC</div><div class="sobre-stat-label">Florianópolis</div></div>
-</div>
-</div>
-</div>
 <div class="cta">
 <div class="cta-inner">
 <div class="cta-left">
@@ -1081,7 +1147,7 @@ blockquote,
 </div>
 <div class="field">
 <label for="telefone">WhatsApp <span class="req">*</span></label>
-<input autocomplete="tel" id="telefone" name="whatsapp" placeholder="(00) 00000-0000" required="" type="tel"/>
+<input autocomplete="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" required="" type="tel"/>
 </div>
 </div>
 <div class="row2">
@@ -1109,6 +1175,14 @@ blockquote,
 <div class="field">
 <label for="desafio">Principal desafio tributário ou patrimonial hoje</label>
 <textarea id="desafio" name="desafio" placeholder="Em poucas linhas, o que mais pesa no seu caixa ou na sua estrutura."></textarea>
+</div>
+<label class="priv" style="display:flex; gap:.6rem; align-items:flex-start; text-align:left; cursor:pointer;">
+<input name="consentimento_marketing" type="checkbox" value="1" style="margin-top:.3rem;"/>
+<span>Autorizo o recebimento de comunicações e conteúdos da Hinnig Tax &amp; Assets. Posso cancelar a qualquer momento.</span>
+</label>
+<div class="field">
+<label for="captcha-resposta" data-captcha-pergunta>Carregando verificação...</label>
+<input autocomplete="off" disabled="" id="captcha-resposta" inputmode="numeric" name="captcha_resposta" placeholder="Digite o resultado" required="" type="text"/>
 </div>
 <button
     id="btn-enviar"
@@ -1162,6 +1236,8 @@ blockquote,
 </div>
 </div>
 </footer>
+<script src="responsive.js"></script>
+<script src="captcha.js"></script>
 <script>
 /* ===== CONFIGURAÇÃO — ALTERE AQUI ANTES DE PUBLICAR =====
    WHATSAPP: número com DDI e DDD, só dígitos (ex.: 5547999999999)
@@ -1185,48 +1261,39 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 const form = document.getElementById('leadForm');
 const msg  = document.getElementById('formMsg');
 
-function encode(data){
-  return Object.keys(data).map(k=>encodeURIComponent(k)+'='+encodeURIComponent(data[k])).join('&');
-}
+if (window.inicializarCaptcha) window.inicializarCaptcha(form);
 
-form.addEventListener('submit', function(ev){
+const parametros = new URLSearchParams(window.location.search);
+['origem', 'pagina_origem', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(nome => {
+  const input = document.createElement('input');
+  input.type = 'hidden';
+  input.name = nome;
+  input.value = nome === 'origem' ? 'pagina-inicial' : (nome === 'pagina_origem' ? window.location.href : (parametros.get(nome) || ''));
+  form.appendChild(input);
+});
+
+form.addEventListener('submit', async function(ev){
   ev.preventDefault();
-  let ok = true;
-  form.querySelectorAll('[required]').forEach(f=>{
-    const bad = !f.value || (f.type==='email' && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(f.value));
-    f.classList.toggle('err', bad);
-    if(bad) ok = false;
-  });
-  if(!ok){ form.querySelector('.err').focus(); return; }
+  if (!form.reportValidity()) return;
 
-  const v = id => (document.getElementById(id).value || '—');
-  const data = {
-    'form-name':'conversa-estrategica',
-    nome:v('nome'), empresa:v('empresa'), cargo:v('cargo'),
-    email:v('email'), telefone:v('telefone'),
-    faturamento:v('faturamento'), regime:v('regime'), desafio:v('desafio')
-  };
+  const botao = form.querySelector('[type="submit"]');
+  const textoOriginal = botao.textContent;
+  botao.disabled = true;
+  botao.textContent = 'Enviando...';
 
-  /* 1) tenta registrar no Netlify Forms (silencioso se não estiver no Netlify) */
-  try{
-    fetch('/', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:encode(data)});
-  }catch(e){}
-
-  /* 2) abre WhatsApp com o resumo qualificado */
-  const txt =
-`Solicitação de conversa estratégica — Hinnig Tax & Assets
-Nome: ${data.nome}
-Empresa: ${data.empresa}
-Cargo: ${data.cargo}
-E-mail: ${data.email}
-WhatsApp: ${data.telefone}
-Faturamento anual: ${data.faturamento}
-Regime: ${data.regime}
-Desafio: ${data.desafio}`;
-  window.open('https://wa.me/'+WHATSAPP+'?text='+encodeURIComponent(txt), '_blank');
-
-  form.style.display='none';
-  msg.style.display='block';
+  try {
+    const resposta = await fetch('contato.php', {method:'POST', body:new FormData(form)});
+    const resultado = await resposta.json();
+    if (!resposta.ok || !resultado.ok) throw new Error((resultado.erros || [resultado.erro || 'Não foi possível enviar.']).join(' '));
+    form.style.display = 'none';
+    msg.style.display = 'block';
+  } catch (erro) {
+    const erroBox = document.getElementById('form-msg-erro');
+    erroBox.textContent = erro.message;
+    erroBox.style.display = 'block';
+    botao.disabled = false;
+    botao.textContent = textoOriginal;
+  }
 });
 </script>
 </body>

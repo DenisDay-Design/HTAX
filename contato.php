@@ -1,243 +1,119 @@
 <?php
-/**
- * Hinnig Tax & Assets — Processador do Formulário de Contato
- * Envia e-mail para o Renato + salva no banco de dados MySQL
- */
+declare(strict_types=1);
 
-// ─── CONFIGURAÇÕES ───────────────────────────────────────────────
-define('EMAIL_DESTINO',  'renato@hinnig.com.br');   // ← troque pelo e-mail real
-define('EMAIL_REMETENTE','noreply@businessrh.com.br'); // ← domínio do site
-define('EMAIL_NOME',     'Hinnig Tax & Assets');
-
-// Banco de dados (preencha com os dados da Hostinger)
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'hinnig_contatos');   // ← nome do banco criado na Hostinger
-define('DB_USER', 'hinnig_user');       // ← usuário do banco
-define('DB_PASS', 'SUA_SENHA_AQUI');    // ← senha do banco
-
-// ─── HEADERS ─────────────────────────────────────────────────────
 header('Content-Type: application/json; charset=utf-8');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST');
+header('X-Content-Type-Options: nosniff');
+session_start();
 
-// Só aceita POST
+function responder(int $status, array $dados): void {
+    http_response_code($status);
+    echo json_encode($dados, JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+function texto(string $chave, int $limite = 0): string {
+    $valor = trim((string) ($_POST[$chave] ?? ''));
+    $valor = strip_tags($valor);
+    return $limite > 0 ? mb_substr($valor, 0, $limite) : $valor;
+}
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    echo json_encode(['ok' => false, 'erro' => 'Método não permitido.']);
-    exit;
+    responder(405, ['ok' => false, 'erro' => 'Método não permitido.']);
 }
 
-// ─── LEITURA E SANITIZAÇÃO DOS DADOS ────────────────────────────
-function limpa($valor) {
-    return htmlspecialchars(strip_tags(trim($valor)), ENT_QUOTES, 'UTF-8');
+// Honeypot: bots normalmente preenchem este campo invisível.
+if (texto('bot-field') !== '' || texto('website') !== '') {
+    responder(200, ['ok' => true]);
 }
 
-$nome       = limpa($_POST['nome']       ?? '');
-$empresa    = limpa($_POST['empresa']    ?? '');
-$cargo      = limpa($_POST['cargo']      ?? '');
-$email      = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
-$telefone   = limpa($_POST['telefone']   ?? '');
-$faturamento= limpa($_POST['faturamento']?? '');
-$regime     = limpa($_POST['regime']     ?? '');
-$desafio    = limpa($_POST['desafio']    ?? '');
+$arquivoConfig = __DIR__ . '/config.php';
+if (!is_file($arquivoConfig)) {
+    error_log('[Hinnig] config.php não encontrado.');
+    responder(503, ['ok' => false, 'erro' => 'O formulário está temporariamente indisponível.']);
+}
 
-// ─── VALIDAÇÃO DOS CAMPOS OBRIGATÓRIOS ──────────────────────────
+$config = require $arquivoConfig;
+if (!is_array($config) || empty($config['db']) || empty($config['email'])) {
+    error_log('[Hinnig] config.php inválido.');
+    responder(503, ['ok' => false, 'erro' => 'O formulário está temporariamente indisponível.']);
+}
+
+$nome = texto('nome', 200);
+$empresa = texto('empresa', 200);
+$cargo = texto('cargo', 200);
+$email = filter_var(trim((string) ($_POST['email'] ?? '')), FILTER_VALIDATE_EMAIL);
+$telefone = texto('telefone', 50) ?: texto('whatsapp', 50);
+$faturamento = texto('faturamento', 100);
+$regime = texto('regime', 100);
+$desafio = texto('desafio', 5000);
+$origem = texto('origem', 100) ?: 'site';
+$paginaOrigem = texto('pagina_origem', 255);
+$utmSource = texto('utm_source', 100);
+$utmMedium = texto('utm_medium', 100);
+$utmCampaign = texto('utm_campaign', 150);
+$utmTerm = texto('utm_term', 150);
+$utmContent = texto('utm_content', 150);
+$consentimento = (string) ($_POST['consentimento_marketing'] ?? '') === '1';
+$captchaResposta = trim((string) ($_POST['captcha_resposta'] ?? ''));
+
 $erros = [];
-
-if (empty($nome))        $erros[] = 'Nome é obrigatório.';
-if (empty($empresa))     $erros[] = 'Empresa é obrigatória.';
-if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL))
-                         $erros[] = 'E-mail inválido.';
-if (empty($telefone))    $erros[] = 'WhatsApp é obrigatório.';
-if (empty($faturamento)) $erros[] = 'Faturamento é obrigatório.';
-if (empty($desafio))     $erros[] = 'Desafio é obrigatório.';
-
-if (!empty($erros)) {
-    http_response_code(422);
-    echo json_encode(['ok' => false, 'erros' => $erros]);
-    exit;
+if ($nome === '') $erros[] = 'Nome é obrigatório.';
+if ($empresa === '') $erros[] = 'Empresa é obrigatória.';
+if (!$email) $erros[] = 'E-mail inválido.';
+if ($telefone === '') $erros[] = 'WhatsApp é obrigatório.';
+if (!isset($_SESSION['lead_captcha_answer']) || !hash_equals((string) $_SESSION['lead_captcha_answer'], $captchaResposta)) {
+    $erros[] = 'A resposta da verificação está incorreta.';
 }
+if ($erros) responder(422, ['ok' => false, 'erros' => $erros]);
 
-// ─── SALVAR NO BANCO DE DADOS ────────────────────────────────────
-$salvo_db = false;
+$db = $config['db'];
+$emailConfig = $config['email'];
+$ip = (string) ($_SERVER['REMOTE_ADDR'] ?? '');
+$ipHash = $ip !== '' ? hash('sha256', $ip) : null;
+
 try {
     $pdo = new PDO(
-        'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8mb4',
-        DB_USER,
-        DB_PASS,
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+        sprintf('mysql:host=%s;dbname=%s;charset=utf8mb4', $db['host'], $db['name']),
+        $db['user'],
+        $db['pass'],
+        [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES => false,
+        ]
     );
 
-    // Cria a tabela se não existir (na primeira vez)
-    $pdo->exec("
-        CREATE TABLE IF NOT EXISTS solicitacoes (
-            id           INT AUTO_INCREMENT PRIMARY KEY,
-            nome         VARCHAR(200)  NOT NULL,
-            empresa      VARCHAR(200)  NOT NULL,
-            cargo        VARCHAR(200),
-            email        VARCHAR(200)  NOT NULL,
-            telefone     VARCHAR(50)   NOT NULL,
-            faturamento  VARCHAR(100),
-            regime       VARCHAR(100),
-            desafio      TEXT,
-            ip           VARCHAR(50),
-            criado_em    DATETIME      DEFAULT CURRENT_TIMESTAMP
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-    ");
-
-    $stmt = $pdo->prepare("
-        INSERT INTO solicitacoes
-            (nome, empresa, cargo, email, telefone, faturamento, regime, desafio, ip)
-        VALUES
-            (:nome, :empresa, :cargo, :email, :telefone, :faturamento, :regime, :desafio, :ip)
-    ");
-
+    $stmt = $pdo->prepare(
+        'INSERT INTO leads (nome, empresa, cargo, email, telefone, faturamento, regime, desafio, origem, pagina_origem, utm_source, utm_medium, utm_campaign, utm_term, utm_content, consentimento_marketing, consentimento_em, ip_hash)
+         VALUES (:nome, :empresa, :cargo, :email, :telefone, :faturamento, :regime, :desafio, :origem, :pagina_origem, :utm_source, :utm_medium, :utm_campaign, :utm_term, :utm_content, :consentimento_marketing, :consentimento_em, :ip_hash)'
+    );
     $stmt->execute([
-        ':nome'        => $nome,
-        ':empresa'     => $empresa,
-        ':cargo'       => $cargo,
-        ':email'       => $email,
-        ':telefone'    => $telefone,
-        ':faturamento' => $faturamento,
-        ':regime'      => $regime,
-        ':desafio'     => $desafio,
-        ':ip'          => $_SERVER['REMOTE_ADDR'] ?? '',
+        ':nome' => $nome, ':empresa' => $empresa, ':cargo' => $cargo ?: null,
+        ':email' => $email, ':telefone' => $telefone, ':faturamento' => $faturamento ?: null,
+        ':regime' => $regime ?: null, ':desafio' => $desafio ?: null, ':origem' => $origem,
+        ':pagina_origem' => $paginaOrigem ?: null, ':utm_source' => $utmSource ?: null,
+        ':utm_medium' => $utmMedium ?: null, ':utm_campaign' => $utmCampaign ?: null,
+        ':utm_term' => $utmTerm ?: null, ':utm_content' => $utmContent ?: null,
+        ':consentimento_marketing' => $consentimento ? 1 : 0,
+        ':consentimento_em' => $consentimento ? date('Y-m-d H:i:s') : null,
+        ':ip_hash' => $ipHash,
     ]);
-
-    $salvo_db = true;
-
-} catch (PDOException $e) {
-    // Não interrompe o fluxo — ainda tenta enviar o e-mail
-    error_log('[Hinnig] Erro DB: ' . $e->getMessage());
+} catch (Throwable $e) {
+    error_log('[Hinnig] Falha ao salvar lead: ' . $e->getMessage());
+    responder(500, ['ok' => false, 'erro' => 'Não foi possível registrar sua solicitação. Tente novamente.']);
 }
 
-// ─── ENVIAR E-MAIL ───────────────────────────────────────────────
-$data_hora = date('d/m/Y \à\s H:i');
-
-$corpo_html = "
-<!DOCTYPE html>
-<html lang='pt-BR'>
-<head>
-  <meta charset='UTF-8'>
-  <style>
-    body { font-family: 'Montserrat', Arial, sans-serif; background:#F8F6F2; margin:0; padding:0; }
-    .wrap { max-width:600px; margin:40px auto; background:#fff; border:1px solid #E8E2D6; }
-    .topo { background:#111111; padding:32px 40px; }
-    .topo h1 { font-family: Georgia, serif; font-size:22px; color:#B8922A; letter-spacing:3px; margin:0; }
-    .topo p  { color:rgba(255,255,255,0.45); font-size:11px; letter-spacing:2px; margin:6px 0 0; text-transform:uppercase; }
-    .corpo { padding:36px 40px; }
-    .linha { border-bottom:1px solid #E8E2D6; padding:16px 0; display:flex; gap:16px; }
-    .linha:last-child { border-bottom:none; }
-    .label { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:#B8922A; font-weight:700; min-width:160px; padding-top:2px; }
-    .valor { font-size:14px; color:#111; line-height:1.6; }
-    .destaque { background:#FBF7EF; border-left:3px solid #B8922A; padding:20px 24px; margin-top:24px; }
-    .destaque .label { margin-bottom:8px; }
-    .destaque .valor { color:#555; }
-    .rodape { background:#F8F6F2; border-top:1px solid #E8E2D6; padding:20px 40px; font-size:11px; color:#888; letter-spacing:1px; }
-  </style>
-</head>
-<body>
-<div class='wrap'>
-  <div class='topo'>
-    <h1>HINNIG TAX &amp; ASSETS</h1>
-    <p>Nova solicitação de conversa estratégica — {$data_hora}</p>
-  </div>
-  <div class='corpo'>
-    <div class='linha'>
-      <span class='label'>Nome</span>
-      <span class='valor'>{$nome}</span>
-    </div>
-    <div class='linha'>
-      <span class='label'>Empresa</span>
-      <span class='valor'>{$empresa}</span>
-    </div>
-    <div class='linha'>
-      <span class='label'>Cargo</span>
-      <span class='valor'>" . ($cargo ?: '—') . "</span>
-    </div>
-    <div class='linha'>
-      <span class='label'>E-mail</span>
-      <span class='valor'><a href='mailto:{$email}' style='color:#B8922A;'>{$email}</a></span>
-    </div>
-    <div class='linha'>
-      <span class='label'>WhatsApp</span>
-      <span class='valor'><a href='https://wa.me/55" . preg_replace('/\D/', '', $telefone) . "' style='color:#B8922A;'>{$telefone}</a></span>
-    </div>
-    <div class='linha'>
-      <span class='label'>Faturamento anual</span>
-      <span class='valor'>{$faturamento}</span>
-    </div>
-    <div class='linha'>
-      <span class='label'>Regime tributário</span>
-      <span class='valor'>" . ($regime ?: '—') . "</span>
-    </div>
-    <div class='destaque'>
-      <div class='label'>Principal desafio</div>
-      <div class='valor'>{$desafio}</div>
-    </div>
-  </div>
-  <div class='rodape'>
-    Enviado em {$data_hora} · IP: " . ($_SERVER['REMOTE_ADDR'] ?? '—') . "
-  </div>
-</div>
-</body>
-</html>
-";
-
-$corpo_texto = "
-Nova solicitação de conversa estratégica — Hinnig Tax & Assets
-================================================================
-Data/hora : {$data_hora}
-Nome      : {$nome}
-Empresa   : {$empresa}
-Cargo     : {$cargo}
-E-mail    : {$email}
-WhatsApp  : {$telefone}
-Faturamento: {$faturamento}
-Regime    : {$regime}
-
-Desafio:
-{$desafio}
-";
-
-// Cabeçalhos do e-mail (multipart para HTML + texto)
-$boundary = md5(uniqid(rand(), true));
-$headers  = implode("\r\n", [
-    'From: ' . EMAIL_NOME . ' <' . EMAIL_REMETENTE . '>',
-    'Reply-To: ' . $nome . ' <' . $email . '>',
-    'MIME-Version: 1.0',
-    'Content-Type: multipart/alternative; boundary="' . $boundary . '"',
-    'X-Mailer: PHP/' . phpversion(),
-]);
-
-$body = "--{$boundary}\r\n"
-      . "Content-Type: text/plain; charset=utf-8\r\n\r\n"
-      . $corpo_texto . "\r\n"
-      . "--{$boundary}\r\n"
-      . "Content-Type: text/html; charset=utf-8\r\n\r\n"
-      . $corpo_html . "\r\n"
-      . "--{$boundary}--";
-
-$assunto = "Nova solicitação — {$nome} ({$empresa})";
-
-$email_enviado = mail(EMAIL_DESTINO, $assunto, $body, $headers);
-
-if (!$email_enviado) {
-    error_log('[Hinnig] Falha ao enviar e-mail para ' . EMAIL_DESTINO);
+$assunto = 'Novo lead — ' . $nome . ' (' . $empresa . ')';
+$mensagem = "Nome: {$nome}\nEmpresa: {$empresa}\nCargo: {$cargo}\nE-mail: {$email}\nWhatsApp: {$telefone}\nFaturamento: {$faturamento}\nRegime: {$regime}\nDesafio: {$desafio}\nOrigem: {$origem}\nConsentimento de marketing: " . ($consentimento ? 'Sim' : 'Não');
+$cabecalhos = [
+    'From: ' . $emailConfig['name'] . ' <' . $emailConfig['sender'] . '>',
+    'Reply-To: ' . $email,
+    'Content-Type: text/plain; charset=UTF-8',
+];
+if (!mail($emailConfig['destination'], $assunto, $mensagem, implode("\r\n", $cabecalhos))) {
+    error_log('[Hinnig] Lead salvo, mas e-mail não enviado.');
 }
 
-// ─── RESPOSTA FINAL ──────────────────────────────────────────────
-if ($salvo_db || $email_enviado) {
-    echo json_encode([
-        'ok'      => true,
-        'mensagem'=> 'Solicitação recebida com sucesso! Em breve entraremos em contato.',
-        'db'      => $salvo_db,
-        'email'   => $email_enviado,
-    ]);
-} else {
-    http_response_code(500);
-    echo json_encode([
-        'ok'   => false,
-        'erro' => 'Erro ao processar a solicitação. Tente novamente ou entre em contato pelo WhatsApp.',
-    ]);
-}
+unset($_SESSION['lead_captcha_answer']);
+
+responder(201, ['ok' => true, 'mensagem' => 'Solicitação recebida com sucesso!']);
