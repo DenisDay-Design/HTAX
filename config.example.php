@@ -15,4 +15,8 @@ return [
         'sender' => 'noreply@seudominio.com.br',
         'name' => 'Hinnig Tax & Assets',
     ],
+    'recaptcha' => [
+        // Chave privada do Google reCAPTCHA v2. Nunca publique este valor no HTML.
+        'secret' => 'SUA_SECRET_KEY_DO_RECAPTCHA',
+    ],
 ];

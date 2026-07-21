@@ -34,19 +34,21 @@ document.addEventListener('DOMContentLoaded', function () {
     btnEnviar.textContent = 'ENVIANDO...';
 
     try {
-      const resposta = await fetch('contato.php', { method: 'POST', body: new FormData(form) });
+      const resposta = await fetch('/api/leads', { method: 'POST', body: new FormData(form) });
       const corpo = await resposta.text();
       let json;
       try {
         json = JSON.parse(corpo);
       } catch (_) {
-        throw new Error('O servidor retornou uma resposta inválida. Verifique se o PHP está ativo na hospedagem e se o arquivo contato.php foi enviado.');
+        throw new Error('O servidor retornou uma resposta inválida. Tente novamente em alguns instantes.');
       }
       if (!resposta.ok || !json.ok) throw new Error((json.erros || [json.erro || 'Erro inesperado.']).join(' '));
 
       form.reset();
+      if (window.turnstile) window.turnstile.reset();
       if (msgOk) msgOk.style.display = 'block';
     } catch (erro) {
+      if (window.turnstile) window.turnstile.reset();
       if (msgErro) {
         msgErro.textContent = erro.message || 'Não foi possível enviar. Tente novamente.';
         msgErro.style.display = 'block';

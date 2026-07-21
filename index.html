@@ -791,6 +791,7 @@ body{font-size:1rem;line-height:1.7;}
   .institutional .valor-item{padding:1.5rem 1.25rem;}
 }
 </style>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 <header id="hdr">
@@ -1125,7 +1126,7 @@ body{font-size:1rem;line-height:1.7;}
 </div>
 <div class="form reveal">
 <div class="fhead">Solicitação de conversa estratégica</div>
-<form class="contato-form" action="contato.php" id="leadForm" method="POST">
+<form class="contato-form" action="/api/leads" id="leadForm" method="POST">
 <input name="form-name" type="hidden" value="conversa-estrategica"/>
 <p style="display:none"><label>Não preencha: <input name="bot-field"/></label></p>
 <div class="field">
@@ -1183,9 +1184,8 @@ body{font-size:1rem;line-height:1.7;}
 <span>Autorizo o recebimento de comunicações e conteúdos da Hinnig Tax &amp; Assets. Posso cancelar a qualquer momento.</span>
 </label>
 <div class="field">
-<label for="captcha-resposta" data-captcha-pergunta>Carregando verificação...</label>
-<input autocomplete="off" disabled="" id="captcha-resposta" inputmode="numeric" name="captcha_resposta" placeholder="Digite o resultado" required="" type="text"/>
-<button class="captcha-refresh" data-captcha-refresh type="button">Gerar nova verificação</button>
+<label>Verificação de segurança</label>
+<div class="cf-turnstile" data-sitekey="0x4AAAAAAD6pgjZ4y_s3W4oh" data-size="flexible"></div>
 </div>
 <button
     id="btn-enviar"
@@ -1285,18 +1285,19 @@ form.addEventListener('submit', async function(ev){
   botao.textContent = 'Enviando...';
 
   try {
-    const resposta = await fetch('contato.php', {method:'POST', body:new FormData(form)});
+    const resposta = await fetch('/api/leads', {method:'POST', body:new FormData(form)});
     const corpo = await resposta.text();
     let resultado;
     try {
       resultado = JSON.parse(corpo);
     } catch (_) {
-      throw new Error('O servidor retornou uma resposta inválida. Verifique se o PHP está ativo na hospedagem e se o arquivo contato.php foi enviado.');
+      throw new Error('O servidor retornou uma resposta inválida. Tente novamente em alguns instantes.');
     }
     if (!resposta.ok || !resultado.ok) throw new Error((resultado.erros || [resultado.erro || 'Não foi possível enviar.']).join(' '));
     form.style.display = 'none';
     msg.style.display = 'block';
   } catch (erro) {
+    if (window.turnstile) window.turnstile.reset();
     const erroBox = document.getElementById('form-msg-erro');
     erroBox.textContent = erro.message;
     erroBox.style.display = 'block';

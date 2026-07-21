@@ -25,6 +25,40 @@ function texto(string $chave, int $limite = 0): string {
     return function_exists('mb_substr') ? mb_substr($valor, 0, $limite) : substr($valor, 0, $limite);
 }
 
+function validarRecaptcha(string $token, string $secret, string $ip): bool {
+    if ($token === '' || $secret === '') return false;
+
+    $dados = http_build_query([
+        'secret' => $secret,
+        'response' => $token,
+        'remoteip' => $ip,
+    ]);
+    $resposta = false;
+
+    if (function_exists('curl_init')) {
+        $curl = curl_init('https://www.google.com/recaptcha/api/siteverify');
+        curl_setopt_array($curl, [
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => $dados,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT => 10,
+        ]);
+        $resposta = curl_exec($curl);
+        curl_close($curl);
+    } else {
+        $contexto = stream_context_create(['http' => [
+            'method' => 'POST',
+            'header' => "Content-Type: application/x-www-form-urlencoded\r\n",
+            'content' => $dados,
+            'timeout' => 10,
+        ]]);
+        $resposta = @file_get_contents('https://www.google.com/recaptcha/api/siteverify', false, $contexto);
+    }
+
+    $resultado = is_string($resposta) ? json_decode($resposta, true) : null;
+    return is_array($resultado) && !empty($resultado['success']);
+}
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     responder(405, ['ok' => false, 'erro' => 'Método não permitido.']);
 }
@@ -41,7 +75,7 @@ if (!is_file($arquivoConfig)) {
 }
 
 $config = require $arquivoConfig;
-if (!is_array($config) || empty($config['db']) || empty($config['email'])) {
+if (!is_array($config) || empty($config['db']) || empty($config['email']) || empty($config['recaptcha']['secret'])) {
     error_log('[Hinnig] config.php inválido.');
     responder(503, ['ok' => false, 'erro' => 'O formulário está temporariamente indisponível.']);
 }
@@ -62,21 +96,21 @@ $utmCampaign = texto('utm_campaign', 150);
 $utmTerm = texto('utm_term', 150);
 $utmContent = texto('utm_content', 150);
 $consentimento = (string) ($_POST['consentimento_marketing'] ?? '') === '1';
-$captchaResposta = trim((string) ($_POST['captcha_resposta'] ?? ''));
+$recaptchaToken = trim((string) ($_POST['g-recaptcha-response'] ?? ''));
+$ip = (string) ($_SERVER['REMOTE_ADDR'] ?? '');
 
 $erros = [];
 if ($nome === '') $erros[] = 'Nome é obrigatório.';
 if ($empresa === '') $erros[] = 'Empresa é obrigatória.';
 if (!$email) $erros[] = 'E-mail inválido.';
 if ($telefone === '') $erros[] = 'WhatsApp é obrigatório.';
-if (!isset($_SESSION['lead_captcha_answer']) || !hash_equals((string) $_SESSION['lead_captcha_answer'], $captchaResposta)) {
-    $erros[] = 'A resposta da verificação está incorreta.';
+if (!validarRecaptcha($recaptchaToken, (string) $config['recaptcha']['secret'], $ip)) {
+    $erros[] = 'Confirme a verificação “Não sou um robô” antes de enviar.';
 }
 if ($erros) responder(422, ['ok' => false, 'erros' => $erros]);
 
 $db = $config['db'];
 $emailConfig = $config['email'];
-$ip = (string) ($_SERVER['REMOTE_ADDR'] ?? '');
 $ipHash = $ip !== '' ? hash('sha256', $ip) : null;
 
 try {
@@ -121,7 +155,5 @@ $cabecalhos = [
 if (!mail($emailConfig['destination'], $assunto, $mensagem, implode("\r\n", $cabecalhos))) {
     error_log('[Hinnig] Lead salvo, mas e-mail não enviado.');
 }
-
-unset($_SESSION['lead_captcha_answer']);
 
 responder(201, ['ok' => true, 'mensagem' => 'Solicitação recebida com sucesso!']);
