@@ -5,6 +5,13 @@ header('Content-Type: application/json; charset=utf-8');
 header('X-Content-Type-Options: nosniff');
 session_start();
 
+set_exception_handler(function (Throwable $erro): void {
+    error_log('[Hinnig] Erro não tratado no formulário: ' . $erro->getMessage());
+    http_response_code(500);
+    echo json_encode(['ok' => false, 'erro' => 'O formulário não pôde ser processado no momento.'], JSON_UNESCAPED_UNICODE);
+    exit;
+});
+
 function responder(int $status, array $dados): void {
     http_response_code($status);
     echo json_encode($dados, JSON_UNESCAPED_UNICODE);
@@ -14,7 +21,8 @@ function responder(int $status, array $dados): void {
 function texto(string $chave, int $limite = 0): string {
     $valor = trim((string) ($_POST[$chave] ?? ''));
     $valor = strip_tags($valor);
-    return $limite > 0 ? mb_substr($valor, 0, $limite) : $valor;
+    if ($limite <= 0) return $valor;
+    return function_exists('mb_substr') ? mb_substr($valor, 0, $limite) : substr($valor, 0, $limite);
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {

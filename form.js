@@ -35,7 +35,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     try {
       const resposta = await fetch('contato.php', { method: 'POST', body: new FormData(form) });
-      const json = await resposta.json();
+      const corpo = await resposta.text();
+      let json;
+      try {
+        json = JSON.parse(corpo);
+      } catch (_) {
+        throw new Error('O servidor retornou uma resposta inválida. Verifique se o PHP está ativo na hospedagem e se o arquivo contato.php foi enviado.');
+      }
       if (!resposta.ok || !json.ok) throw new Error((json.erros || [json.erro || 'Erro inesperado.']).join(' '));
 
       form.reset();
