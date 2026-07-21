@@ -15,15 +15,25 @@
     pergunta.textContent = 'Carregando verificação...';
     resposta.disabled = true;
     try {
-      const requisicao = await fetch('captcha.php', { credentials: 'same-origin', cache: 'no-store' });
-      const dados = await requisicao.json();
+      const requisicao = await fetch('captcha.php?t=' + Date.now(), {
+        credentials: 'same-origin',
+        cache: 'no-store',
+        headers: { Accept: 'application/json' }
+      });
+      const corpo = await requisicao.text();
+      let dados;
+      try {
+        dados = JSON.parse(corpo);
+      } catch (_) {
+        throw new Error('Resposta inválida do servidor');
+      }
       if (!requisicao.ok || !dados.ok) throw new Error();
       pergunta.textContent = dados.pergunta;
       resposta.disabled = false;
       resposta.value = '';
       resposta.focus();
     } catch (_) {
-      pergunta.textContent = 'Não foi possível carregar a verificação. Atualize a página e tente novamente.';
+      pergunta.textContent = 'Não foi possível carregar a verificação. Tente gerar uma nova ou atualize a página.';
     }
   };
 
@@ -33,6 +43,14 @@
       campo.maxLength = 16;
       campo.addEventListener('input', function () { campo.value = formatarTelefone(campo.value); });
       campo.value = formatarTelefone(campo.value);
+    });
+
+    document.querySelectorAll('form').forEach(function (form) {
+      const atualizar = form.querySelector('[data-captcha-refresh]');
+      if (!atualizar) return;
+      atualizar.addEventListener('click', function () {
+        window.inicializarCaptcha(form);
+      });
     });
   });
 })();

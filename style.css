@@ -163,7 +163,10 @@ body,body *,body *::before,body *::after{font-family:'Montserrat',sans-serif !im
 body{font-size:1rem;font-weight:400;line-height:1.6;}
 h1,h2,h3,h4,h5,h6,.nav-logo-circle,.nav-brand,.feature-card h3,.destaque-box h3,.stat-num,.step-num,.step h4,.aviso-icon,.outros-servicos h2,.outro-card h4,.cta-banner h2,.footer-brand{font-family:'Montserrat',sans-serif !important;}
 .nav-links a,.nav-dropdown-menu a,.nav-cta,.page-tag span,.section-tag span,.feature-card-num,.stat-label,.outro-card-num,.btn-gold,.btn-white-outline,.btn-black,.btn-outline-dark{font-size:0.78rem;}
-.page-hero p,.section-sub,.two-col-text p,.feature-card p,.destaque-box p,.cta-banner p{font-size:1rem;}
+.page-hero p,.section-sub,.two-col-text p,.feature-card p,.destaque-box p,.cta-banner p{font-size:1.08rem;}
+.feature-card h3,.destaque-box h3,.step h4,.outro-card h4{font-size:1.3rem;}
+.step p,.aviso p,.outro-card p{font-size:1rem;}
+.captcha-refresh{display:inline-block;margin-top:.6rem;padding:0;background:transparent;border:0;color:var(--gold);font:inherit;font-size:.78rem;letter-spacing:.06em;text-decoration:underline;cursor:pointer;}
 
 .site-footer{background:var(--black);padding:3rem 5rem;}
 .site-footer .wrap{max-width:1180px;margin:0 auto;}

@@ -191,7 +191,7 @@ header.solid{
 .hero-grid{position:relative;display:grid;grid-template-columns:1.18fr .82fr;gap:56px;align-items:center;padding:44px 0 84px}
 .hero-eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:26px}
 .hero-eyebrow .rule{height:1px;width:46px;background:var(--oxblood)}
-.hero h1{font-size:clamp(2.5rem,5.4vw,4.6rem);line-height:1.02;letter-spacing:-.02em;font-weight:500}
+.hero h1{font-size:clamp(2.3rem,4.8vw,4.15rem);line-height:1.04;letter-spacing:-.02em;font-weight:500}
 .hero h1 .accent{font-style:italic;font-weight:400;color:var(--pewter-2)}
 .hero h1 em{font-style:italic;color:var(--bone)}
 .hero-sub{font-size:1.22rem;line-height:1.55;color:#cfccc2;margin:30px 0 38px;max-width:30em}
@@ -395,8 +395,8 @@ section{padding:5.5rem 5rem;}
 .institutional .mvv-card:last-child{border-right:none;}
 .institutional .mvv-card:hover{background:var(--gold-bg);}
 .institutional .mvv-icon{width:40px;height:40px;border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold);}
-.institutional .mvv-card h3{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;margin-bottom:1rem;color:var(--black);}
-.institutional .mvv-card p{font-size:14px;line-height:1.9;color:var(--gray);}
+.institutional .mvv-card h3{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;margin-bottom:1rem;color:var(--black);}
+.institutional .mvv-card p{font-size:16px;line-height:1.9;color:var(--gray);}
 
 .institutional /* SOLUÇÕES - cards maiores para melhor leitura */
 .solucoes{background:var(--off-white);}
@@ -773,6 +773,8 @@ body{font-size:1rem;line-height:1.7;}
     min-height:0;
     padding:2rem 1.5rem;
   }
+  .institutional .mvv-card h3{font-size:1.6rem;}
+  .institutional .mvv-card p{font-size:1rem;}
   .institutional .solucao-card h3{font-size:1.45rem;}
   .institutional .solucao-card p{line-height:1.75;}
   .institutional .cta{padding:4rem 1.5rem;}
@@ -842,7 +844,7 @@ body{font-size:1rem;line-height:1.7;}
 <div class="cell reveal"><div class="n">1984</div><div class="l">Início como Auditor Fiscal da Receita Estadual de SC</div></div>
 <div class="cell reveal"><div class="n">2×</div><div class="l">Diretor de Administração Tributária da SEF/SC em governos distintos</div></div>
 <div class="cell reveal"><div class="n">2011</div><div class="l">Secretário de Estado da Fazenda de Santa Catarina</div></div>
-<div class="cell reveal"><div class="n">2026</div><div class="l">Abertura das operações HTAX Hinnig &amp; Assets</div></div>
+<div class="cell reveal"><div class="n">2000 — Atual</div><div class="l">Operações Hinnig Tax &amp; Assets</div></div>
 </div>
 </div>
 </section><!-- BLOCO INSTITUCIONAL / HOME ATUAL -->
@@ -1183,6 +1185,7 @@ body{font-size:1rem;line-height:1.7;}
 <div class="field">
 <label for="captcha-resposta" data-captcha-pergunta>Carregando verificação...</label>
 <input autocomplete="off" disabled="" id="captcha-resposta" inputmode="numeric" name="captcha_resposta" placeholder="Digite o resultado" required="" type="text"/>
+<button class="captcha-refresh" data-captcha-refresh type="button">Gerar nova verificação</button>
 </div>
 <button
     id="btn-enviar"
